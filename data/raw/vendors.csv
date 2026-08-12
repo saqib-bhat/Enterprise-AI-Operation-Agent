@@ -1,0 +1,501 @@
+vendor_id,vendor_name,category,location,contract_type,payment_terms,rating
+V0001,Raw Materials Supply Co. 1,Raw Materials,Germany,Fixed,Net 30,4.79
+V0002,Raw Materials Supply Co. 2,Raw Materials,Vietnam,Variable,Prepaid,4.61
+V0003,Raw Materials Supply Co. 3,Raw Materials,Poland,Term,Prepaid,4.55
+V0004,Components Supply Co. 4,Components,Vietnam,Variable,Net 30,4.31
+V0005,Components Supply Co. 5,Components,Germany,Fixed,Net 30,4.01
+V0006,Components Supply Co. 6,Components,Spain,Variable,Net 45,3.91
+V0007,Finished Goods Supply Co. 7,Finished Goods,Mexico,Term,Net 60,4.65
+V0008,Finished Goods Supply Co. 8,Finished Goods,Poland,Variable,Net 60,3.36
+V0009,Packaging Supply Co. 9,Packaging,Poland,Fixed,Prepaid,3.45
+V0010,Packaging Supply Co. 10,Packaging,Vietnam,Fixed,Net 60,3.85
+V0011,Electronics Supply Co. 11,Electronics,Canada,Fixed,Prepaid,4.76
+V0012,Electronics Supply Co. 12,Electronics,Canada,Variable,Prepaid,3.92
+V0013,Packaging Supply Co. 13,Packaging,Poland,Fixed,Prepaid,4.22
+V0014,Components Supply Co. 14,Components,Spain,Variable,Net 30,4.24
+V0015,Components Supply Co. 15,Components,China,Term,Net 30,4.49
+V0016,Electronics Supply Co. 16,Electronics,Canada,Variable,Prepaid,4.79
+V0017,Finished Goods Supply Co. 17,Finished Goods,Germany,Variable,Prepaid,4.41
+V0018,Packaging Supply Co. 18,Packaging,Poland,Fixed,Prepaid,4.41
+V0019,Packaging Supply Co. 19,Packaging,India,Variable,Prepaid,4.65
+V0020,Raw Materials Supply Co. 20,Raw Materials,Canada,Variable,Net 60,4.7
+V0021,Electronics Supply Co. 21,Electronics,USA,Fixed,Prepaid,4.65
+V0022,Finished Goods Supply Co. 22,Finished Goods,Spain,Fixed,Net 45,3.67
+V0023,Packaging Supply Co. 23,Packaging,Spain,Variable,Prepaid,4.65
+V0024,Electronics Supply Co. 24,Electronics,Poland,Variable,Net 30,4.7
+V0025,Raw Materials Supply Co. 25,Raw Materials,Mexico,Variable,Net 30,3.99
+V0026,Raw Materials Supply Co. 26,Raw Materials,Poland,Fixed,Net 45,4.94
+V0027,Raw Materials Supply Co. 27,Raw Materials,Spain,Term,Net 60,4.83
+V0028,Raw Materials Supply Co. 28,Raw Materials,Mexico,Fixed,Prepaid,3.46
+V0029,Components Supply Co. 29,Components,USA,Fixed,Prepaid,4.25
+V0030,Components Supply Co. 30,Components,Germany,Variable,Net 45,3.65
+V0031,Components Supply Co. 31,Components,Vietnam,Fixed,Net 60,4.4
+V0032,Finished Goods Supply Co. 32,Finished Goods,Mexico,Fixed,Net 60,4.4
+V0033,Finished Goods Supply Co. 33,Finished Goods,Vietnam,Variable,Prepaid,4.44
+V0034,Packaging Supply Co. 34,Packaging,China,Variable,Prepaid,4.26
+V0035,Packaging Supply Co. 35,Packaging,Vietnam,Term,Net 60,3.35
+V0036,Electronics Supply Co. 36,Electronics,China,Term,Net 60,4.11
+V0037,Electronics Supply Co. 37,Electronics,Canada,Term,Net 45,3.88
+V0038,Packaging Supply Co. 38,Packaging,Germany,Fixed,Net 30,3.29
+V0039,Components Supply Co. 39,Components,Mexico,Variable,Net 30,3.25
+V0040,Components Supply Co. 40,Components,Spain,Fixed,Net 60,4.01
+V0041,Electronics Supply Co. 41,Electronics,Germany,Variable,Prepaid,4.23
+V0042,Finished Goods Supply Co. 42,Finished Goods,China,Fixed,Net 45,3.98
+V0043,Packaging Supply Co. 43,Packaging,Mexico,Variable,Net 45,4.42
+V0044,Packaging Supply Co. 44,Packaging,Germany,Variable,Net 30,3.55
+V0045,Raw Materials Supply Co. 45,Raw Materials,China,Fixed,Net 30,4.01
+V0046,Electronics Supply Co. 46,Electronics,Brazil,Variable,Net 30,3.43
+V0047,Finished Goods Supply Co. 47,Finished Goods,Poland,Fixed,Net 45,3.49
+V0048,Packaging Supply Co. 48,Packaging,China,Fixed,Prepaid,4.16
+V0049,Electronics Supply Co. 49,Electronics,Germany,Fixed,Net 45,3.82
+V0050,Raw Materials Supply Co. 50,Raw Materials,India,Variable,Prepaid,3.72
+V0051,Raw Materials Supply Co. 51,Raw Materials,China,Fixed,Prepaid,4.0
+V0052,Raw Materials Supply Co. 52,Raw Materials,Poland,Variable,Net 60,4.67
+V0053,Raw Materials Supply Co. 53,Raw Materials,Brazil,Fixed,Net 30,4.78
+V0054,Components Supply Co. 54,Components,Mexico,Variable,Net 45,4.93
+V0055,Components Supply Co. 55,Components,Mexico,Term,Net 60,4.21
+V0056,Components Supply Co. 56,Components,Vietnam,Variable,Net 45,3.4
+V0057,Finished Goods Supply Co. 57,Finished Goods,India,Variable,Net 45,4.23
+V0058,Finished Goods Supply Co. 58,Finished Goods,Vietnam,Fixed,Net 45,3.38
+V0059,Packaging Supply Co. 59,Packaging,India,Fixed,Prepaid,3.51
+V0060,Packaging Supply Co. 60,Packaging,USA,Variable,Net 45,4.36
+V0061,Electronics Supply Co. 61,Electronics,Germany,Variable,Net 60,4.26
+V0062,Electronics Supply Co. 62,Electronics,Germany,Fixed,Net 60,3.49
+V0063,Packaging Supply Co. 63,Packaging,India,Fixed,Prepaid,4.76
+V0064,Components Supply Co. 64,Components,India,Variable,Net 30,3.3
+V0065,Components Supply Co. 65,Components,Brazil,Fixed,Net 30,3.37
+V0066,Electronics Supply Co. 66,Electronics,Poland,Variable,Net 60,3.77
+V0067,Finished Goods Supply Co. 67,Finished Goods,Spain,Variable,Net 30,4.86
+V0068,Packaging Supply Co. 68,Packaging,Mexico,Variable,Prepaid,3.97
+V0069,Packaging Supply Co. 69,Packaging,Germany,Variable,Net 60,3.9
+V0070,Raw Materials Supply Co. 70,Raw Materials,Mexico,Fixed,Prepaid,4.78
+V0071,Electronics Supply Co. 71,Electronics,India,Variable,Net 60,4.51
+V0072,Finished Goods Supply Co. 72,Finished Goods,Germany,Fixed,Prepaid,3.77
+V0073,Packaging Supply Co. 73,Packaging,USA,Variable,Net 60,3.56
+V0074,Electronics Supply Co. 74,Electronics,USA,Variable,Net 30,3.49
+V0075,Raw Materials Supply Co. 75,Raw Materials,Germany,Fixed,Net 45,4.14
+V0076,Raw Materials Supply Co. 76,Raw Materials,Vietnam,Variable,Net 60,3.25
+V0077,Raw Materials Supply Co. 77,Raw Materials,Vietnam,Fixed,Prepaid,3.89
+V0078,Raw Materials Supply Co. 78,Raw Materials,Brazil,Variable,Net 45,4.59
+V0079,Components Supply Co. 79,Components,China,Variable,Prepaid,4.8
+V0080,Components Supply Co. 80,Components,China,Fixed,Net 30,3.7
+V0081,Components Supply Co. 81,Components,Spain,Variable,Net 60,3.45
+V0082,Finished Goods Supply Co. 82,Finished Goods,Vietnam,Fixed,Net 45,4.2
+V0083,Finished Goods Supply Co. 83,Finished Goods,Poland,Term,Net 60,4.34
+V0084,Packaging Supply Co. 84,Packaging,Mexico,Fixed,Net 30,4.33
+V0085,Packaging Supply Co. 85,Packaging,Brazil,Variable,Net 45,4.42
+V0086,Electronics Supply Co. 86,Electronics,China,Term,Prepaid,4.47
+V0087,Electronics Supply Co. 87,Electronics,Mexico,Term,Net 45,4.21
+V0088,Packaging Supply Co. 88,Packaging,India,Fixed,Net 45,3.87
+V0089,Components Supply Co. 89,Components,Spain,Variable,Prepaid,4.81
+V0090,Components Supply Co. 90,Components,Vietnam,Fixed,Net 45,4.33
+V0091,Electronics Supply Co. 91,Electronics,China,Variable,Net 30,4.91
+V0092,Finished Goods Supply Co. 92,Finished Goods,Poland,Variable,Net 30,4.35
+V0093,Packaging Supply Co. 93,Packaging,Germany,Fixed,Net 60,3.45
+V0094,Packaging Supply Co. 94,Packaging,Germany,Term,Net 30,4.16
+V0095,Raw Materials Supply Co. 95,Raw Materials,Vietnam,Fixed,Net 30,4.92
+V0096,Electronics Supply Co. 96,Electronics,Canada,Variable,Net 45,4.94
+V0097,Finished Goods Supply Co. 97,Finished Goods,Germany,Fixed,Prepaid,3.8
+V0098,Packaging Supply Co. 98,Packaging,India,Fixed,Net 45,3.49
+V0099,Electronics Supply Co. 99,Electronics,India,Fixed,Net 60,3.84
+V0100,Raw Materials Supply Co. 100,Raw Materials,Canada,Fixed,Net 30,4.73
+V0101,Raw Materials Supply Co. 101,Raw Materials,Spain,Term,Net 60,4.66
+V0102,Raw Materials Supply Co. 102,Raw Materials,Poland,Fixed,Net 30,3.52
+V0103,Raw Materials Supply Co. 103,Raw Materials,Poland,Fixed,Net 30,4.8
+V0104,Components Supply Co. 104,Components,Poland,Variable,Net 30,4.72
+V0105,Components Supply Co. 105,Components,Germany,Fixed,Net 45,4.16
+V0106,Components Supply Co. 106,Components,Vietnam,Variable,Net 45,3.39
+V0107,Finished Goods Supply Co. 107,Finished Goods,Mexico,Variable,Net 30,3.89
+V0108,Finished Goods Supply Co. 108,Finished Goods,Vietnam,Fixed,Net 30,3.83
+V0109,Packaging Supply Co. 109,Packaging,Spain,Fixed,Net 45,4.69
+V0110,Packaging Supply Co. 110,Packaging,Spain,Term,Net 60,3.35
+V0111,Electronics Supply Co. 111,Electronics,Germany,Term,Net 60,3.68
+V0112,Electronics Supply Co. 112,Electronics,Brazil,Fixed,Prepaid,4.11
+V0113,Packaging Supply Co. 113,Packaging,Mexico,Fixed,Prepaid,3.93
+V0114,Components Supply Co. 114,Components,China,Fixed,Prepaid,3.6
+V0115,Components Supply Co. 115,Components,Mexico,Variable,Net 60,3.94
+V0116,Electronics Supply Co. 116,Electronics,Vietnam,Fixed,Net 45,4.0
+V0117,Finished Goods Supply Co. 117,Finished Goods,Vietnam,Variable,Net 45,3.98
+V0118,Packaging Supply Co. 118,Packaging,Mexico,Term,Net 60,3.68
+V0119,Packaging Supply Co. 119,Packaging,Spain,Fixed,Net 60,3.62
+V0120,Raw Materials Supply Co. 120,Raw Materials,China,Variable,Net 30,3.68
+V0121,Electronics Supply Co. 121,Electronics,Vietnam,Variable,Prepaid,3.92
+V0122,Finished Goods Supply Co. 122,Finished Goods,Poland,Variable,Prepaid,3.81
+V0123,Packaging Supply Co. 123,Packaging,Spain,Term,Net 45,3.96
+V0124,Electronics Supply Co. 124,Electronics,Mexico,Fixed,Prepaid,4.5
+V0125,Raw Materials Supply Co. 125,Raw Materials,USA,Fixed,Net 60,3.44
+V0126,Raw Materials Supply Co. 126,Raw Materials,Vietnam,Variable,Prepaid,4.7
+V0127,Raw Materials Supply Co. 127,Raw Materials,Spain,Term,Prepaid,3.81
+V0128,Raw Materials Supply Co. 128,Raw Materials,USA,Variable,Net 30,4.39
+V0129,Components Supply Co. 129,Components,India,Fixed,Net 45,4.62
+V0130,Components Supply Co. 130,Components,Poland,Fixed,Net 60,3.34
+V0131,Components Supply Co. 131,Components,Brazil,Variable,Net 30,4.97
+V0132,Finished Goods Supply Co. 132,Finished Goods,China,Fixed,Net 45,4.9
+V0133,Finished Goods Supply Co. 133,Finished Goods,Brazil,Variable,Net 45,4.47
+V0134,Packaging Supply Co. 134,Packaging,Germany,Variable,Net 45,3.39
+V0135,Packaging Supply Co. 135,Packaging,India,Term,Net 30,3.53
+V0136,Electronics Supply Co. 136,Electronics,Poland,Term,Prepaid,4.38
+V0137,Electronics Supply Co. 137,Electronics,Mexico,Fixed,Net 60,4.29
+V0138,Packaging Supply Co. 138,Packaging,India,Variable,Net 60,4.71
+V0139,Components Supply Co. 139,Components,USA,Variable,Net 45,3.24
+V0140,Components Supply Co. 140,Components,Mexico,Fixed,Prepaid,3.56
+V0141,Electronics Supply Co. 141,Electronics,India,Variable,Prepaid,3.75
+V0142,Finished Goods Supply Co. 142,Finished Goods,Vietnam,Fixed,Prepaid,4.75
+V0143,Packaging Supply Co. 143,Packaging,Poland,Variable,Net 60,4.97
+V0144,Packaging Supply Co. 144,Packaging,Vietnam,Fixed,Net 60,4.08
+V0145,Raw Materials Supply Co. 145,Raw Materials,Mexico,Fixed,Net 30,4.98
+V0146,Electronics Supply Co. 146,Electronics,China,Variable,Prepaid,4.33
+V0147,Finished Goods Supply Co. 147,Finished Goods,Vietnam,Term,Net 30,4.03
+V0148,Packaging Supply Co. 148,Packaging,Brazil,Variable,Net 45,4.12
+V0149,Electronics Supply Co. 149,Electronics,India,Variable,Prepaid,3.45
+V0150,Raw Materials Supply Co. 150,Raw Materials,Mexico,Fixed,Prepaid,4.16
+V0151,Raw Materials Supply Co. 151,Raw Materials,Poland,Fixed,Net 45,4.51
+V0152,Raw Materials Supply Co. 152,Raw Materials,China,Variable,Net 30,4.64
+V0153,Raw Materials Supply Co. 153,Raw Materials,USA,Fixed,Net 60,4.89
+V0154,Components Supply Co. 154,Components,China,Fixed,Net 60,3.43
+V0155,Components Supply Co. 155,Components,China,Fixed,Net 30,4.55
+V0156,Components Supply Co. 156,Components,China,Variable,Prepaid,4.84
+V0157,Finished Goods Supply Co. 157,Finished Goods,USA,Fixed,Net 60,4.8
+V0158,Finished Goods Supply Co. 158,Finished Goods,Germany,Variable,Prepaid,3.48
+V0159,Packaging Supply Co. 159,Packaging,Mexico,Fixed,Net 30,4.05
+V0160,Packaging Supply Co. 160,Packaging,USA,Fixed,Net 60,3.79
+V0161,Electronics Supply Co. 161,Electronics,USA,Fixed,Net 45,4.76
+V0162,Electronics Supply Co. 162,Electronics,Germany,Variable,Prepaid,3.56
+V0163,Packaging Supply Co. 163,Packaging,China,Fixed,Prepaid,3.58
+V0164,Components Supply Co. 164,Components,China,Variable,Prepaid,4.5
+V0165,Components Supply Co. 165,Components,Spain,Term,Net 45,4.94
+V0166,Electronics Supply Co. 166,Electronics,Spain,Term,Prepaid,3.37
+V0167,Finished Goods Supply Co. 167,Finished Goods,Brazil,Variable,Net 30,4.56
+V0168,Packaging Supply Co. 168,Packaging,Mexico,Variable,Net 45,3.41
+V0169,Packaging Supply Co. 169,Packaging,Brazil,Variable,Net 45,4.82
+V0170,Raw Materials Supply Co. 170,Raw Materials,Canada,Fixed,Net 45,4.37
+V0171,Electronics Supply Co. 171,Electronics,India,Fixed,Net 60,3.92
+V0172,Finished Goods Supply Co. 172,Finished Goods,Spain,Variable,Net 60,4.71
+V0173,Packaging Supply Co. 173,Packaging,Spain,Term,Net 30,4.63
+V0174,Electronics Supply Co. 174,Electronics,Poland,Fixed,Net 60,4.02
+V0175,Raw Materials Supply Co. 175,Raw Materials,Vietnam,Variable,Net 30,4.88
+V0176,Raw Materials Supply Co. 176,Raw Materials,Poland,Fixed,Net 60,4.94
+V0177,Raw Materials Supply Co. 177,Raw Materials,Germany,Variable,Net 60,4.18
+V0178,Raw Materials Supply Co. 178,Raw Materials,Poland,Term,Net 30,4.66
+V0179,Components Supply Co. 179,Components,India,Fixed,Net 30,3.33
+V0180,Components Supply Co. 180,Components,Spain,Variable,Prepaid,4.64
+V0181,Components Supply Co. 181,Components,Vietnam,Term,Prepaid,4.17
+V0182,Finished Goods Supply Co. 182,Finished Goods,China,Term,Net 45,3.25
+V0183,Finished Goods Supply Co. 183,Finished Goods,Canada,Fixed,Net 60,3.23
+V0184,Packaging Supply Co. 184,Packaging,USA,Variable,Net 30,4.55
+V0185,Packaging Supply Co. 185,Packaging,Poland,Fixed,Net 60,4.49
+V0186,Electronics Supply Co. 186,Electronics,India,Term,Net 45,3.78
+V0187,Electronics Supply Co. 187,Electronics,Spain,Variable,Prepaid,3.63
+V0188,Packaging Supply Co. 188,Packaging,Mexico,Variable,Prepaid,3.65
+V0189,Components Supply Co. 189,Components,China,Variable,Net 30,4.26
+V0190,Components Supply Co. 190,Components,Vietnam,Fixed,Net 30,4.1
+V0191,Electronics Supply Co. 191,Electronics,Brazil,Fixed,Net 30,4.15
+V0192,Finished Goods Supply Co. 192,Finished Goods,China,Fixed,Net 60,3.68
+V0193,Packaging Supply Co. 193,Packaging,Canada,Term,Net 30,3.84
+V0194,Packaging Supply Co. 194,Packaging,Poland,Fixed,Net 30,4.21
+V0195,Raw Materials Supply Co. 195,Raw Materials,Brazil,Variable,Net 45,4.02
+V0196,Electronics Supply Co. 196,Electronics,Germany,Term,Prepaid,3.92
+V0197,Finished Goods Supply Co. 197,Finished Goods,USA,Fixed,Net 30,3.67
+V0198,Packaging Supply Co. 198,Packaging,China,Variable,Net 60,3.35
+V0199,Electronics Supply Co. 199,Electronics,China,Term,Net 30,3.59
+V0200,Raw Materials Supply Co. 200,Raw Materials,Poland,Fixed,Prepaid,4.19
+V0201,Raw Materials Supply Co. 201,Raw Materials,USA,Fixed,Prepaid,4.71
+V0202,Raw Materials Supply Co. 202,Raw Materials,Poland,Variable,Net 30,4.92
+V0203,Raw Materials Supply Co. 203,Raw Materials,Brazil,Variable,Prepaid,3.28
+V0204,Components Supply Co. 204,Components,Germany,Fixed,Net 30,3.7
+V0205,Components Supply Co. 205,Components,USA,Fixed,Net 30,4.05
+V0206,Components Supply Co. 206,Components,India,Fixed,Net 45,4.19
+V0207,Finished Goods Supply Co. 207,Finished Goods,Poland,Variable,Net 45,4.09
+V0208,Finished Goods Supply Co. 208,Finished Goods,USA,Variable,Net 45,4.17
+V0209,Packaging Supply Co. 209,Packaging,Spain,Fixed,Net 30,3.23
+V0210,Packaging Supply Co. 210,Packaging,Canada,Variable,Prepaid,4.41
+V0211,Electronics Supply Co. 211,Electronics,China,Fixed,Net 45,4.21
+V0212,Electronics Supply Co. 212,Electronics,Poland,Variable,Prepaid,3.7
+V0213,Packaging Supply Co. 213,Packaging,China,Variable,Net 30,3.82
+V0214,Components Supply Co. 214,Components,China,Term,Net 45,4.68
+V0215,Components Supply Co. 215,Components,Spain,Term,Net 45,4.44
+V0216,Electronics Supply Co. 216,Electronics,Mexico,Fixed,Net 30,3.45
+V0217,Finished Goods Supply Co. 217,Finished Goods,Canada,Fixed,Prepaid,4.33
+V0218,Packaging Supply Co. 218,Packaging,Vietnam,Fixed,Net 60,3.35
+V0219,Packaging Supply Co. 219,Packaging,Vietnam,Fixed,Net 60,3.63
+V0220,Raw Materials Supply Co. 220,Raw Materials,Canada,Term,Net 60,4.27
+V0221,Electronics Supply Co. 221,Electronics,Vietnam,Variable,Net 45,3.75
+V0222,Finished Goods Supply Co. 222,Finished Goods,Poland,Fixed,Net 30,3.82
+V0223,Packaging Supply Co. 223,Packaging,China,Variable,Net 30,3.64
+V0224,Electronics Supply Co. 224,Electronics,Spain,Variable,Net 45,4.29
+V0225,Raw Materials Supply Co. 225,Raw Materials,Poland,Term,Prepaid,3.4
+V0226,Raw Materials Supply Co. 226,Raw Materials,China,Fixed,Net 60,3.47
+V0227,Raw Materials Supply Co. 227,Raw Materials,India,Fixed,Net 60,4.91
+V0228,Raw Materials Supply Co. 228,Raw Materials,Canada,Variable,Net 30,4.0
+V0229,Components Supply Co. 229,Components,Germany,Fixed,Net 60,4.0
+V0230,Components Supply Co. 230,Components,Germany,Term,Net 60,3.99
+V0231,Components Supply Co. 231,Components,Spain,Variable,Net 60,3.65
+V0232,Finished Goods Supply Co. 232,Finished Goods,Vietnam,Variable,Net 60,4.75
+V0233,Finished Goods Supply Co. 233,Finished Goods,China,Fixed,Net 30,3.57
+V0234,Packaging Supply Co. 234,Packaging,India,Variable,Prepaid,3.6
+V0235,Packaging Supply Co. 235,Packaging,Mexico,Fixed,Net 30,3.61
+V0236,Electronics Supply Co. 236,Electronics,China,Variable,Prepaid,3.57
+V0237,Electronics Supply Co. 237,Electronics,Poland,Fixed,Prepaid,4.45
+V0238,Packaging Supply Co. 238,Packaging,Mexico,Term,Prepaid,3.64
+V0239,Components Supply Co. 239,Components,Poland,Fixed,Net 45,3.74
+V0240,Components Supply Co. 240,Components,Canada,Variable,Net 45,4.0
+V0241,Electronics Supply Co. 241,Electronics,Canada,Variable,Net 30,4.3
+V0242,Finished Goods Supply Co. 242,Finished Goods,USA,Variable,Net 60,4.21
+V0243,Packaging Supply Co. 243,Packaging,Canada,Fixed,Net 60,4.64
+V0244,Packaging Supply Co. 244,Packaging,Vietnam,Variable,Net 60,4.55
+V0245,Raw Materials Supply Co. 245,Raw Materials,Poland,Fixed,Prepaid,4.15
+V0246,Electronics Supply Co. 246,Electronics,Canada,Variable,Net 60,4.74
+V0247,Finished Goods Supply Co. 247,Finished Goods,Brazil,Variable,Prepaid,3.84
+V0248,Packaging Supply Co. 248,Packaging,USA,Fixed,Net 45,3.51
+V0249,Electronics Supply Co. 249,Electronics,Vietnam,Fixed,Net 45,3.98
+V0250,Raw Materials Supply Co. 250,Raw Materials,Brazil,Fixed,Net 30,4.97
+V0251,Raw Materials Supply Co. 251,Raw Materials,Germany,Fixed,Net 30,4.02
+V0252,Raw Materials Supply Co. 252,Raw Materials,Mexico,Variable,Net 30,3.95
+V0253,Raw Materials Supply Co. 253,Raw Materials,Mexico,Fixed,Net 30,3.37
+V0254,Components Supply Co. 254,Components,Germany,Variable,Net 45,4.03
+V0255,Components Supply Co. 255,Components,Canada,Fixed,Net 30,4.69
+V0256,Components Supply Co. 256,Components,Brazil,Term,Prepaid,3.81
+V0257,Finished Goods Supply Co. 257,Finished Goods,China,Fixed,Net 60,3.63
+V0258,Finished Goods Supply Co. 258,Finished Goods,Spain,Variable,Net 30,4.85
+V0259,Packaging Supply Co. 259,Packaging,Poland,Variable,Prepaid,4.56
+V0260,Packaging Supply Co. 260,Packaging,China,Fixed,Prepaid,3.96
+V0261,Electronics Supply Co. 261,Electronics,Germany,Variable,Net 30,4.01
+V0262,Electronics Supply Co. 262,Electronics,Mexico,Variable,Net 30,3.93
+V0263,Packaging Supply Co. 263,Packaging,Canada,Variable,Net 60,4.48
+V0264,Components Supply Co. 264,Components,Poland,Fixed,Net 30,3.83
+V0265,Components Supply Co. 265,Components,China,Fixed,Net 45,4.28
+V0266,Electronics Supply Co. 266,Electronics,India,Fixed,Prepaid,4.61
+V0267,Finished Goods Supply Co. 267,Finished Goods,Brazil,Fixed,Net 30,3.94
+V0268,Packaging Supply Co. 268,Packaging,Germany,Variable,Net 60,3.77
+V0269,Packaging Supply Co. 269,Packaging,Vietnam,Term,Net 60,3.62
+V0270,Raw Materials Supply Co. 270,Raw Materials,Vietnam,Variable,Prepaid,3.66
+V0271,Electronics Supply Co. 271,Electronics,Poland,Variable,Prepaid,3.72
+V0272,Finished Goods Supply Co. 272,Finished Goods,India,Fixed,Prepaid,3.49
+V0273,Packaging Supply Co. 273,Packaging,Poland,Fixed,Net 60,3.76
+V0274,Electronics Supply Co. 274,Electronics,Vietnam,Fixed,Net 45,4.28
+V0275,Raw Materials Supply Co. 275,Raw Materials,Mexico,Variable,Net 30,4.39
+V0276,Raw Materials Supply Co. 276,Raw Materials,Canada,Variable,Prepaid,4.3
+V0277,Raw Materials Supply Co. 277,Raw Materials,Germany,Term,Prepaid,4.56
+V0278,Raw Materials Supply Co. 278,Raw Materials,Spain,Variable,Prepaid,3.84
+V0279,Components Supply Co. 279,Components,Mexico,Fixed,Net 60,4.63
+V0280,Components Supply Co. 280,Components,Spain,Fixed,Prepaid,4.04
+V0281,Components Supply Co. 281,Components,Vietnam,Fixed,Net 60,4.17
+V0282,Finished Goods Supply Co. 282,Finished Goods,Poland,Variable,Net 30,4.59
+V0283,Finished Goods Supply Co. 283,Finished Goods,Canada,Fixed,Net 60,4.85
+V0284,Packaging Supply Co. 284,Packaging,India,Fixed,Net 45,3.3
+V0285,Packaging Supply Co. 285,Packaging,Brazil,Fixed,Net 60,4.88
+V0286,Electronics Supply Co. 286,Electronics,Vietnam,Variable,Net 30,4.42
+V0287,Electronics Supply Co. 287,Electronics,Poland,Variable,Net 30,3.72
+V0288,Packaging Supply Co. 288,Packaging,Germany,Term,Net 45,3.41
+V0289,Components Supply Co. 289,Components,Germany,Term,Net 30,5.0
+V0290,Components Supply Co. 290,Components,Canada,Fixed,Prepaid,4.95
+V0291,Electronics Supply Co. 291,Electronics,Poland,Variable,Net 60,3.94
+V0292,Finished Goods Supply Co. 292,Finished Goods,Mexico,Variable,Prepaid,3.54
+V0293,Packaging Supply Co. 293,Packaging,USA,Variable,Net 45,3.68
+V0294,Packaging Supply Co. 294,Packaging,Poland,Fixed,Prepaid,4.49
+V0295,Raw Materials Supply Co. 295,Raw Materials,Germany,Variable,Prepaid,4.68
+V0296,Electronics Supply Co. 296,Electronics,Spain,Variable,Net 45,4.61
+V0297,Finished Goods Supply Co. 297,Finished Goods,India,Variable,Net 30,4.63
+V0298,Packaging Supply Co. 298,Packaging,Canada,Fixed,Prepaid,4.14
+V0299,Electronics Supply Co. 299,Electronics,China,Fixed,Net 45,4.57
+V0300,Raw Materials Supply Co. 300,Raw Materials,India,Fixed,Net 30,3.55
+V0301,Raw Materials Supply Co. 301,Raw Materials,Canada,Fixed,Prepaid,4.94
+V0302,Raw Materials Supply Co. 302,Raw Materials,USA,Fixed,Net 30,3.7
+V0303,Raw Materials Supply Co. 303,Raw Materials,Brazil,Fixed,Net 60,3.37
+V0304,Components Supply Co. 304,Components,Poland,Variable,Net 30,4.44
+V0305,Components Supply Co. 305,Components,Spain,Variable,Net 45,3.51
+V0306,Components Supply Co. 306,Components,Brazil,Variable,Net 30,3.9
+V0307,Finished Goods Supply Co. 307,Finished Goods,Vietnam,Variable,Net 60,3.54
+V0308,Finished Goods Supply Co. 308,Finished Goods,China,Term,Prepaid,3.32
+V0309,Packaging Supply Co. 309,Packaging,Vietnam,Fixed,Net 60,4.64
+V0310,Packaging Supply Co. 310,Packaging,Poland,Fixed,Net 60,4.73
+V0311,Electronics Supply Co. 311,Electronics,Brazil,Variable,Prepaid,4.34
+V0312,Electronics Supply Co. 312,Electronics,USA,Term,Net 45,3.68
+V0313,Packaging Supply Co. 313,Packaging,Canada,Term,Net 30,3.57
+V0314,Components Supply Co. 314,Components,Germany,Fixed,Prepaid,3.33
+V0315,Components Supply Co. 315,Components,Mexico,Fixed,Net 45,4.95
+V0316,Electronics Supply Co. 316,Electronics,USA,Term,Net 60,4.56
+V0317,Finished Goods Supply Co. 317,Finished Goods,Germany,Term,Net 45,4.89
+V0318,Packaging Supply Co. 318,Packaging,USA,Fixed,Net 60,3.56
+V0319,Packaging Supply Co. 319,Packaging,Mexico,Fixed,Prepaid,4.96
+V0320,Raw Materials Supply Co. 320,Raw Materials,Canada,Variable,Net 45,3.28
+V0321,Electronics Supply Co. 321,Electronics,Vietnam,Variable,Prepaid,4.44
+V0322,Finished Goods Supply Co. 322,Finished Goods,USA,Variable,Net 60,4.77
+V0323,Packaging Supply Co. 323,Packaging,Brazil,Variable,Net 60,4.2
+V0324,Electronics Supply Co. 324,Electronics,Poland,Fixed,Prepaid,4.17
+V0325,Raw Materials Supply Co. 325,Raw Materials,Germany,Variable,Net 30,3.98
+V0326,Raw Materials Supply Co. 326,Raw Materials,USA,Variable,Net 30,4.05
+V0327,Raw Materials Supply Co. 327,Raw Materials,Spain,Variable,Net 60,4.92
+V0328,Raw Materials Supply Co. 328,Raw Materials,India,Fixed,Prepaid,3.61
+V0329,Components Supply Co. 329,Components,Brazil,Fixed,Net 45,4.03
+V0330,Components Supply Co. 330,Components,USA,Fixed,Prepaid,3.83
+V0331,Components Supply Co. 331,Components,Canada,Term,Net 45,4.67
+V0332,Finished Goods Supply Co. 332,Finished Goods,Vietnam,Fixed,Net 60,4.55
+V0333,Finished Goods Supply Co. 333,Finished Goods,India,Variable,Prepaid,4.2
+V0334,Packaging Supply Co. 334,Packaging,Brazil,Fixed,Prepaid,4.73
+V0335,Packaging Supply Co. 335,Packaging,Brazil,Variable,Prepaid,3.67
+V0336,Electronics Supply Co. 336,Electronics,Mexico,Term,Net 45,4.52
+V0337,Electronics Supply Co. 337,Electronics,Mexico,Variable,Net 45,4.53
+V0338,Packaging Supply Co. 338,Packaging,China,Fixed,Net 45,3.6
+V0339,Components Supply Co. 339,Components,Brazil,Term,Prepaid,4.04
+V0340,Components Supply Co. 340,Components,Spain,Fixed,Net 60,4.74
+V0341,Electronics Supply Co. 341,Electronics,India,Variable,Net 30,3.7
+V0342,Finished Goods Supply Co. 342,Finished Goods,Spain,Fixed,Net 30,4.57
+V0343,Packaging Supply Co. 343,Packaging,Poland,Variable,Net 60,3.95
+V0344,Packaging Supply Co. 344,Packaging,Germany,Variable,Net 60,3.41
+V0345,Raw Materials Supply Co. 345,Raw Materials,USA,Variable,Net 45,3.64
+V0346,Electronics Supply Co. 346,Electronics,Mexico,Term,Net 60,4.91
+V0347,Finished Goods Supply Co. 347,Finished Goods,India,Variable,Net 60,3.22
+V0348,Packaging Supply Co. 348,Packaging,India,Term,Net 60,4.6
+V0349,Electronics Supply Co. 349,Electronics,India,Variable,Net 30,4.58
+V0350,Raw Materials Supply Co. 350,Raw Materials,China,Fixed,Net 60,3.92
+V0351,Raw Materials Supply Co. 351,Raw Materials,China,Fixed,Net 30,4.31
+V0352,Raw Materials Supply Co. 352,Raw Materials,Canada,Variable,Net 30,4.53
+V0353,Raw Materials Supply Co. 353,Raw Materials,USA,Fixed,Net 30,4.96
+V0354,Components Supply Co. 354,Components,USA,Variable,Net 45,3.23
+V0355,Components Supply Co. 355,Components,Spain,Fixed,Net 30,4.27
+V0356,Components Supply Co. 356,Components,Germany,Variable,Net 30,3.56
+V0357,Finished Goods Supply Co. 357,Finished Goods,Vietnam,Fixed,Net 45,4.95
+V0358,Finished Goods Supply Co. 358,Finished Goods,USA,Fixed,Net 30,3.56
+V0359,Packaging Supply Co. 359,Packaging,India,Variable,Prepaid,4.01
+V0360,Packaging Supply Co. 360,Packaging,Poland,Variable,Net 30,4.81
+V0361,Electronics Supply Co. 361,Electronics,Canada,Term,Net 30,3.75
+V0362,Electronics Supply Co. 362,Electronics,Brazil,Fixed,Net 30,3.21
+V0363,Packaging Supply Co. 363,Packaging,USA,Fixed,Net 45,4.91
+V0364,Components Supply Co. 364,Components,USA,Term,Net 30,4.33
+V0365,Components Supply Co. 365,Components,USA,Term,Net 60,3.5
+V0366,Electronics Supply Co. 366,Electronics,Brazil,Variable,Net 30,4.78
+V0367,Finished Goods Supply Co. 367,Finished Goods,Spain,Fixed,Net 60,3.52
+V0368,Packaging Supply Co. 368,Packaging,Vietnam,Fixed,Net 30,3.35
+V0369,Packaging Supply Co. 369,Packaging,China,Variable,Net 30,4.12
+V0370,Raw Materials Supply Co. 370,Raw Materials,Germany,Variable,Prepaid,4.05
+V0371,Electronics Supply Co. 371,Electronics,Mexico,Variable,Net 45,4.25
+V0372,Finished Goods Supply Co. 372,Finished Goods,Vietnam,Fixed,Net 30,4.52
+V0373,Packaging Supply Co. 373,Packaging,Brazil,Fixed,Net 30,4.71
+V0374,Electronics Supply Co. 374,Electronics,Spain,Variable,Net 30,4.12
+V0375,Raw Materials Supply Co. 375,Raw Materials,Germany,Fixed,Net 30,3.44
+V0376,Raw Materials Supply Co. 376,Raw Materials,Vietnam,Term,Net 30,4.85
+V0377,Raw Materials Supply Co. 377,Raw Materials,Spain,Term,Prepaid,4.05
+V0378,Raw Materials Supply Co. 378,Raw Materials,Mexico,Fixed,Net 60,3.3
+V0379,Components Supply Co. 379,Components,Canada,Term,Net 45,4.67
+V0380,Components Supply Co. 380,Components,Germany,Fixed,Prepaid,4.62
+V0381,Components Supply Co. 381,Components,Poland,Fixed,Net 60,4.25
+V0382,Finished Goods Supply Co. 382,Finished Goods,Brazil,Fixed,Net 30,3.45
+V0383,Finished Goods Supply Co. 383,Finished Goods,Germany,Variable,Net 45,3.88
+V0384,Packaging Supply Co. 384,Packaging,Brazil,Term,Prepaid,3.91
+V0385,Packaging Supply Co. 385,Packaging,China,Variable,Net 45,4.23
+V0386,Electronics Supply Co. 386,Electronics,Vietnam,Variable,Net 45,3.23
+V0387,Electronics Supply Co. 387,Electronics,China,Variable,Net 60,3.48
+V0388,Packaging Supply Co. 388,Packaging,China,Fixed,Net 60,3.44
+V0389,Components Supply Co. 389,Components,China,Variable,Prepaid,4.45
+V0390,Components Supply Co. 390,Components,USA,Variable,Net 60,3.28
+V0391,Electronics Supply Co. 391,Electronics,USA,Term,Net 30,4.18
+V0392,Finished Goods Supply Co. 392,Finished Goods,Poland,Variable,Prepaid,3.22
+V0393,Packaging Supply Co. 393,Packaging,Germany,Fixed,Prepaid,4.84
+V0394,Packaging Supply Co. 394,Packaging,USA,Term,Net 45,3.62
+V0395,Raw Materials Supply Co. 395,Raw Materials,China,Fixed,Net 45,3.89
+V0396,Electronics Supply Co. 396,Electronics,Mexico,Term,Prepaid,4.51
+V0397,Finished Goods Supply Co. 397,Finished Goods,Brazil,Term,Prepaid,4.15
+V0398,Packaging Supply Co. 398,Packaging,China,Term,Prepaid,4.45
+V0399,Electronics Supply Co. 399,Electronics,Poland,Fixed,Prepaid,4.33
+V0400,Raw Materials Supply Co. 400,Raw Materials,China,Fixed,Net 60,3.92
+V0401,Raw Materials Supply Co. 401,Raw Materials,Spain,Fixed,Net 45,3.43
+V0402,Raw Materials Supply Co. 402,Raw Materials,Poland,Variable,Prepaid,4.28
+V0403,Raw Materials Supply Co. 403,Raw Materials,Mexico,Fixed,Net 45,3.43
+V0404,Components Supply Co. 404,Components,India,Variable,Net 60,4.75
+V0405,Components Supply Co. 405,Components,USA,Fixed,Net 60,3.41
+V0406,Components Supply Co. 406,Components,USA,Variable,Prepaid,4.94
+V0407,Finished Goods Supply Co. 407,Finished Goods,Spain,Fixed,Net 30,3.5
+V0408,Finished Goods Supply Co. 408,Finished Goods,India,Fixed,Net 60,3.33
+V0409,Packaging Supply Co. 409,Packaging,Mexico,Variable,Net 30,4.27
+V0410,Packaging Supply Co. 410,Packaging,Poland,Variable,Net 30,4.59
+V0411,Electronics Supply Co. 411,Electronics,Mexico,Fixed,Net 30,3.9
+V0412,Electronics Supply Co. 412,Electronics,USA,Fixed,Net 30,3.46
+V0413,Packaging Supply Co. 413,Packaging,Mexico,Fixed,Net 30,3.84
+V0414,Components Supply Co. 414,Components,China,Fixed,Net 30,3.35
+V0415,Components Supply Co. 415,Components,Poland,Term,Net 60,4.68
+V0416,Electronics Supply Co. 416,Electronics,Poland,Term,Net 60,3.41
+V0417,Finished Goods Supply Co. 417,Finished Goods,USA,Term,Net 45,4.66
+V0418,Packaging Supply Co. 418,Packaging,Poland,Variable,Net 30,4.69
+V0419,Packaging Supply Co. 419,Packaging,Mexico,Variable,Net 30,4.83
+V0420,Raw Materials Supply Co. 420,Raw Materials,China,Fixed,Net 45,4.46
+V0421,Electronics Supply Co. 421,Electronics,Poland,Term,Prepaid,3.57
+V0422,Finished Goods Supply Co. 422,Finished Goods,Poland,Variable,Prepaid,3.28
+V0423,Packaging Supply Co. 423,Packaging,USA,Fixed,Net 45,3.72
+V0424,Electronics Supply Co. 424,Electronics,Canada,Variable,Net 60,3.72
+V0425,Raw Materials Supply Co. 425,Raw Materials,China,Fixed,Prepaid,3.97
+V0426,Raw Materials Supply Co. 426,Raw Materials,Germany,Variable,Net 45,4.31
+V0427,Raw Materials Supply Co. 427,Raw Materials,Spain,Fixed,Prepaid,3.93
+V0428,Raw Materials Supply Co. 428,Raw Materials,USA,Fixed,Prepaid,3.36
+V0429,Components Supply Co. 429,Components,Vietnam,Fixed,Net 30,4.39
+V0430,Components Supply Co. 430,Components,Mexico,Fixed,Prepaid,3.86
+V0431,Components Supply Co. 431,Components,Spain,Fixed,Prepaid,3.29
+V0432,Finished Goods Supply Co. 432,Finished Goods,Canada,Fixed,Net 45,3.61
+V0433,Finished Goods Supply Co. 433,Finished Goods,Poland,Variable,Net 45,3.9
+V0434,Packaging Supply Co. 434,Packaging,Spain,Variable,Net 30,4.32
+V0435,Packaging Supply Co. 435,Packaging,Vietnam,Variable,Net 60,3.72
+V0436,Electronics Supply Co. 436,Electronics,Vietnam,Fixed,Net 30,4.78
+V0437,Electronics Supply Co. 437,Electronics,Spain,Fixed,Net 60,3.95
+V0438,Packaging Supply Co. 438,Packaging,Brazil,Term,Net 45,4.69
+V0439,Components Supply Co. 439,Components,Canada,Term,Net 30,4.06
+V0440,Components Supply Co. 440,Components,Canada,Variable,Prepaid,3.84
+V0441,Electronics Supply Co. 441,Electronics,Canada,Variable,Net 30,4.1
+V0442,Finished Goods Supply Co. 442,Finished Goods,Poland,Fixed,Net 45,4.23
+V0443,Packaging Supply Co. 443,Packaging,China,Term,Net 30,4.25
+V0444,Packaging Supply Co. 444,Packaging,Poland,Term,Prepaid,4.23
+V0445,Raw Materials Supply Co. 445,Raw Materials,Brazil,Variable,Prepaid,3.36
+V0446,Electronics Supply Co. 446,Electronics,USA,Fixed,Prepaid,3.93
+V0447,Finished Goods Supply Co. 447,Finished Goods,USA,Fixed,Net 45,3.5
+V0448,Packaging Supply Co. 448,Packaging,USA,Term,Net 30,4.9
+V0449,Electronics Supply Co. 449,Electronics,Canada,Term,Net 45,4.98
+V0450,Raw Materials Supply Co. 450,Raw Materials,Poland,Fixed,Net 45,4.98
+V0451,Raw Materials Supply Co. 451,Raw Materials,Poland,Fixed,Prepaid,4.52
+V0452,Raw Materials Supply Co. 452,Raw Materials,China,Fixed,Net 60,3.59
+V0453,Raw Materials Supply Co. 453,Raw Materials,Spain,Variable,Net 60,3.97
+V0454,Components Supply Co. 454,Components,Canada,Fixed,Net 45,4.33
+V0455,Components Supply Co. 455,Components,Germany,Variable,Prepaid,4.83
+V0456,Components Supply Co. 456,Components,Spain,Variable,Net 30,3.72
+V0457,Finished Goods Supply Co. 457,Finished Goods,Mexico,Term,Net 45,4.75
+V0458,Finished Goods Supply Co. 458,Finished Goods,India,Fixed,Prepaid,3.99
+V0459,Packaging Supply Co. 459,Packaging,Mexico,Term,Net 30,4.16
+V0460,Packaging Supply Co. 460,Packaging,Vietnam,Variable,Net 45,3.59
+V0461,Electronics Supply Co. 461,Electronics,Germany,Fixed,Prepaid,4.47
+V0462,Electronics Supply Co. 462,Electronics,Poland,Variable,Net 45,4.96
+V0463,Packaging Supply Co. 463,Packaging,China,Variable,Net 30,3.6
+V0464,Components Supply Co. 464,Components,Brazil,Term,Net 30,3.51
+V0465,Components Supply Co. 465,Components,Vietnam,Fixed,Prepaid,3.36
+V0466,Electronics Supply Co. 466,Electronics,USA,Term,Net 45,4.35
+V0467,Finished Goods Supply Co. 467,Finished Goods,Vietnam,Fixed,Net 45,3.3
+V0468,Packaging Supply Co. 468,Packaging,India,Fixed,Prepaid,4.92
+V0469,Packaging Supply Co. 469,Packaging,Spain,Variable,Net 45,4.05
+V0470,Raw Materials Supply Co. 470,Raw Materials,Spain,Variable,Net 45,3.73
+V0471,Electronics Supply Co. 471,Electronics,China,Variable,Net 30,4.47
+V0472,Finished Goods Supply Co. 472,Finished Goods,India,Fixed,Net 30,3.34
+V0473,Packaging Supply Co. 473,Packaging,Mexico,Variable,Net 60,3.94
+V0474,Electronics Supply Co. 474,Electronics,Vietnam,Variable,Net 60,4.71
+V0475,Raw Materials Supply Co. 475,Raw Materials,Poland,Fixed,Net 30,3.25
+V0476,Raw Materials Supply Co. 476,Raw Materials,India,Variable,Net 60,3.41
+V0477,Raw Materials Supply Co. 477,Raw Materials,India,Variable,Net 30,3.4
+V0478,Raw Materials Supply Co. 478,Raw Materials,Brazil,Fixed,Net 60,3.97
+V0479,Components Supply Co. 479,Components,India,Variable,Net 30,4.2
+V0480,Components Supply Co. 480,Components,Brazil,Term,Net 30,4.3
+V0481,Components Supply Co. 481,Components,Vietnam,Variable,Net 30,3.33
+V0482,Finished Goods Supply Co. 482,Finished Goods,Germany,Variable,Net 60,4.48
+V0483,Finished Goods Supply Co. 483,Finished Goods,India,Term,Net 60,3.88
+V0484,Packaging Supply Co. 484,Packaging,Mexico,Fixed,Net 60,4.89
+V0485,Packaging Supply Co. 485,Packaging,Mexico,Variable,Net 45,4.31
+V0486,Electronics Supply Co. 486,Electronics,China,Variable,Net 30,4.4
+V0487,Electronics Supply Co. 487,Electronics,Mexico,Fixed,Net 30,4.74
+V0488,Packaging Supply Co. 488,Packaging,Vietnam,Term,Net 45,4.91
+V0489,Components Supply Co. 489,Components,Germany,Variable,Net 30,3.71
+V0490,Components Supply Co. 490,Components,Vietnam,Fixed,Net 30,4.62
+V0491,Electronics Supply Co. 491,Electronics,China,Fixed,Net 45,3.59
+V0492,Finished Goods Supply Co. 492,Finished Goods,Canada,Variable,Prepaid,4.22
+V0493,Packaging Supply Co. 493,Packaging,Germany,Variable,Net 60,4.81
+V0494,Packaging Supply Co. 494,Packaging,India,Fixed,Prepaid,3.75
+V0495,Raw Materials Supply Co. 495,Raw Materials,Poland,Fixed,Net 60,4.97
+V0496,Electronics Supply Co. 496,Electronics,Poland,Fixed,Prepaid,3.86
+V0497,Finished Goods Supply Co. 497,Finished Goods,Poland,Term,Prepaid,4.55
+V0498,Packaging Supply Co. 498,Packaging,China,Variable,Net 45,4.16
+V0499,Electronics Supply Co. 499,Electronics,Mexico,Term,Prepaid,3.34
+V0500,Raw Materials Supply Co. 500,Raw Materials,Poland,Term,Prepaid,4.47
