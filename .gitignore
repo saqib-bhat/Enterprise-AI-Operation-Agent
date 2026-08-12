@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+.venv/
+venv/
+ENV/
+env/
+.python-version
+
+
+# Byte-compiled / optimized / DLL files
+*.so
+*.dylib
+*.dll
+
+# Distribution / packaging
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# Vector store
+vector_store/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# Pytest
+.cache/
+
+# Mac
+.DS_Store

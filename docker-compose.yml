@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - LLM_PROVIDER=mock
+      - DATABASE_URL=sqlite:///./data/operations.db
+      - VECTOR_STORE_PATH=./vector_store
+      - LOG_LEVEL=INFO
