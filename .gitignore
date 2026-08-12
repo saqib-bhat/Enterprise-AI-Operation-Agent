@@ -48,3 +48,5 @@ vector_store/
 
 # Mac
 .DS_Store
+
+.tmp_*.py
