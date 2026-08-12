@@ -21,17 +21,17 @@ The agent determines which tools are required and orchestrates them automaticall
 For example:
 
 ```text
-User Query
-    |
-    v
-LangGraph Agent
-    |
-    v
-Planner
-    |
-    v
-Router
-    |
+                    User Query
+                        |
+                        v
+                    LangGraph Agent
+                        |
+                        v
+                    Planner
+                        |
+                        v
+                    Router
+                        |
     +------------------+------------------+
     |                  |                  |
     v                  v                  v
