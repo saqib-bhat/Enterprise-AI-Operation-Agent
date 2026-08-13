@@ -1,7 +1,9 @@
 """Chat endpoint for the Enterprise AI Operations Agent API."""
 
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
+from typing import Annotated
+
+from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel, Field, field_validator
 
 from app.agent.graph import run_graph
 
@@ -10,7 +12,15 @@ router = APIRouter()
 
 class ChatRequest(BaseModel):
     """Request model for chat endpoint."""
-    query: str = Field(..., min_length=1, description="User query")
+    query: str = Field(..., description="User query")
+
+    @field_validator("query")
+    @classmethod
+    def validate_query_not_empty(cls, v: str) -> str:
+        """Validate that query is not empty or whitespace-only."""
+        if not v or not v.strip():
+            raise ValueError("Query cannot be empty or whitespace-only")
+        return v
 
 
 class ChatResponse(BaseModel):
@@ -24,7 +34,19 @@ class ChatResponse(BaseModel):
     latency: dict[str, float]
 
 
-@router.post("/chat", response_model=ChatResponse)
+class ErrorResponse(BaseModel):
+    """Error response model."""
+    detail: str
+
+
+@router.post(
+    "/chat",
+    response_model=ChatResponse,
+    responses={
+        400: {"model": ErrorResponse, "description": "Invalid query"},
+        500: {"model": ErrorResponse, "description": "Internal server error"},
+    },
+)
 def chat(request: ChatRequest):
     """Process a user query through the LangGraph agent.
     
@@ -33,6 +55,9 @@ def chat(request: ChatRequest):
         
     Returns:
         ChatResponse with the agent's answer and metadata
+        
+    Raises:
+        HTTPException: On validation failure or agent errors
     """
     try:
         # Run the existing LangGraph agent
@@ -49,10 +74,14 @@ def chat(request: ChatRequest):
             latency=state.get("latency", {}),
         )
         
-    except Exception as e:
-        # Log the error internally but return a safe response
-        # Never expose internal errors, API keys, or stack traces
+    except HTTPException:
+        # Re-raise HTTPException without exposing internal details
+        raise
+        
+    except Exception:
+        # Catch all other exceptions and return controlled error
+        # Never expose stack traces, API keys, or internal details
         raise HTTPException(
-            status_code=500,
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error",
-        ) from e
+        )

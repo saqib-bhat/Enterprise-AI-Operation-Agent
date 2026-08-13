@@ -16,6 +16,13 @@ def setup_mock_provider(monkeypatch):
     _f._provider_instance = None
 
 
+def test_health_check():
+    """Test that the health endpoint remains working."""
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
+
+
 def test_chat_success(monkeypatch):
     """Test successful chat request."""
     setup_mock_provider(monkeypatch)
@@ -57,15 +64,6 @@ def test_chat_success(monkeypatch):
     assert isinstance(data["latency"], dict)
 
 
-def test_chat_empty_query(monkeypatch):
-    """Test that empty query is rejected."""
-    setup_mock_provider(monkeypatch)
-    
-    response = client.post("/chat", json={"query": ""})
-    
-    assert response.status_code == 422  # Validation error
-
-
 def test_chat_missing_query(monkeypatch):
     """Test that missing query is rejected."""
     setup_mock_provider(monkeypatch)
@@ -75,8 +73,30 @@ def test_chat_missing_query(monkeypatch):
     assert response.status_code == 422  # Validation error
 
 
-def test_chat_error_handling(monkeypatch):
-    """Test that errors from agent are captured in response."""
+def test_chat_empty_query(monkeypatch):
+    """Test that empty query is rejected."""
+    setup_mock_provider(monkeypatch)
+    
+    response = client.post("/chat", json={"query": ""})
+    
+    assert response.status_code == 422  # Validation error
+
+
+def test_chat_whitespace_query(monkeypatch):
+    """Test that whitespace-only query is rejected."""
+    setup_mock_provider(monkeypatch)
+    
+    # Test with spaces only
+    response = client.post("/chat", json={"query": "   "})
+    assert response.status_code == 422  # Validation error
+    
+    # Test with tabs and spaces
+    response = client.post("/chat", json={"query": "\t  \n  "})
+    assert response.status_code == 422  # Validation error
+
+
+def test_chat_agent_error_handling(monkeypatch):
+    """Test that agent errors are handled gracefully without exposing internals."""
     setup_mock_provider(monkeypatch)
     
     # This query should trigger SQL and potentially other tools
@@ -88,3 +108,9 @@ def test_chat_error_handling(monkeypatch):
     # Even if there are errors, the response should still be valid
     assert "errors" in data
     assert isinstance(data["errors"], list)
+    
+    # Verify no sensitive information is exposed
+    response_text = response.text.lower()
+    assert "traceback" not in response_text
+    assert "exception" not in response_text
+    assert "stack" not in response_text
