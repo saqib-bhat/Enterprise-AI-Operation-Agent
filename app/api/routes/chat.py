@@ -66,7 +66,10 @@ def chat(request: ChatRequest):
         # Map AgentState fields to API response
         return ChatResponse(
             query=state.get("user_query", request.query),
-            answer=state.get("final_answer", "Unable to process query"),
+            answer=state.get("final_response", {}).get(
+            "Answer",
+            "Unable to generate a verified answer from the available evidence."
+            ) if state.get("final_response") else "Unable to generate a verified answer from the available evidence.",
             tools_used=state.get("selected_tools", []),
             evidence=state.get("evidence", []),
             verification=state.get("verification_result", {}),
@@ -78,9 +81,7 @@ def chat(request: ChatRequest):
         # Re-raise HTTPException without exposing internal details
         raise
         
-    except Exception:
-        # Catch all other exceptions and return controlled error
-        # Never expose stack traces, API keys, or internal details
+    except Exception as exc:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error",

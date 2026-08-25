@@ -105,17 +105,21 @@ def execute_tools(
                     and sql_result.get("rows")
                 ):
                     row = sql_result["rows"][0]
+                    columns = sql_result.get("columns", [])
 
                     if (
-                        "june_revenue" in row
-                        and "july_revenue" in row
+                        "june_revenue" in columns
+                        and "july_revenue" in columns
                     ):
+                        june_index = columns.index("june_revenue")
+                        july_index = columns.index("july_revenue")
+
                         operations = [
                             {
                                 "op": "percentage_change",
                                 "args": [
-                                    row["june_revenue"],
-                                    row["july_revenue"],
+                                    row[june_index],
+                                    row[july_index],
                                 ],
                             }
                         ]

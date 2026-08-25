@@ -3,7 +3,8 @@ import os
 from pathlib import Path
 from typing import List, Dict
 import uuid
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
+
 
 
 def extract_text_from_pdf(path: Path) -> List[Dict]:

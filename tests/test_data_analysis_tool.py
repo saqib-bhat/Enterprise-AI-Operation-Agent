@@ -15,6 +15,6 @@ def test_compare_periods():
 
 
 def test_trend_by_period():
-    res = trend_by_period('sales', 'date', 'revenue', freq='M')
+    res = trend_by_period('sales', 'date', 'revenue', freq='ME')
     assert res['success'] is True
     assert isinstance(res['data'], list)

@@ -1,6 +1,5 @@
 from __future__ import annotations
 from typing import Any, Dict, List
-import pandas as pd
 from pathlib import Path
 from datetime import datetime
 
@@ -11,11 +10,20 @@ DATA_FILES = {
 }
 
 
-def _load_table(name: str) -> pd.DataFrame:
+def _load_table(name: str):
+    import pandas as pd
+
     if name not in DATA_FILES:
         raise ValueError("Unknown data source")
+
     path = DATA_FILES[name]
-    df = pd.read_csv(path, parse_dates=["date"]) if path.exists() else pd.DataFrame()
+
+    df = (
+        pd.read_csv(path, parse_dates=["date"])
+        if path.exists()
+        else pd.DataFrame()
+    )
+
     return df
 
 
@@ -45,6 +53,7 @@ def groupby_aggregate(source: str, group_by: List[str], aggregations: Dict[str, 
 def compare_periods(source: str, date_column: str, start_a: str, end_a: str, start_b: str, end_b: str, metric: str) -> Dict[str, Any]:
     """Compare aggregation of metric between two date ranges (inclusive). Dates are ISO strings."""
     try:
+        import pandas as pd
         df = _load_table(source)
         if df.empty:
             return {"success": False, "error": "Source data not found or empty"}
@@ -64,9 +73,10 @@ def compare_periods(source: str, date_column: str, start_a: str, end_a: str, sta
         return {"success": False, "error": str(e)}
 
 
-def trend_by_period(source: str, date_column: str, metric: str, freq: str = "M") -> Dict[str, Any]:
-    """Return time series aggregation by frequency (M=month) for the metric."""
+def trend_by_period(source: str, date_column: str, metric: str, freq: str = "ME") -> Dict[str, Any]:
+    """Return time series aggregation by frequency for the metric."""
     try:
+        import pandas as pd
         df = _load_table(source)
         if df.empty:
             return {"success": False, "error": "Source data not found or empty"}

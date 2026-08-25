@@ -4,9 +4,8 @@ from fastapi import FastAPI
 
 from app.api.routes import chat
 
-app = FastAPI(title="Enterprise AI Operations Agent API")
+app = FastAPI(title="Enterprise AI Operations Agent")
 
-# Include routers
 app.include_router(chat.router)
 
 

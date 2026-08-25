@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     llm_provider: str = "groq"
     groq_api_key: str | None = None
-    groq_model: str = "gpt-4.1-mini"
+    groq_model: str = "llama-3.1-8b-instant"
     database_url: str = "sqlite:///./data/operations.db"
     vector_store_path: str = "./vector_store"
     mlflow_enabled: bool = False

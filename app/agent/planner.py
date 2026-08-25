@@ -19,7 +19,12 @@ def determine_plan(user_query: str) -> List[str]:
         plan = []
 
         # SQL is required for structured business/data questions.
-        if any(
+        # But avoid SQL for pure policy/document questions that only need RAG.
+        has_policy_words = any(
+            word in q
+            for word in ("policy", "sop", "procedure", "rule")
+        )
+        has_data_words = any(
             word in q
             for word in (
                 "revenue",
@@ -29,10 +34,13 @@ def determine_plan(user_query: str) -> List[str]:
                 "increase",
                 "decrease",
                 "cost",
-                "inventory",
                 "vendor",
             )
-        ):
+        )
+        # "inventory" alone should not trigger SQL if it's a policy question
+        has_inventory = "inventory" in q
+
+        if (has_data_words or (has_inventory and not has_policy_words)):
             plan.append("sql")
 
         # RAG is required for document/policy questions.
@@ -89,10 +97,20 @@ def determine_plan(user_query: str) -> List[str]:
             if not (tool in seen or seen.add(tool))
         ]
 
-    # Production/non-mock mode.
+        # Production/non-mock mode.
+    # The LLM proposes tools, but deterministic business rules validate
+    # the proposal before execution. This prevents unnecessary tools
+    # from being selected for simple retrieval questions.
+
     prompt = (
         f"Produce a comma-separated list of tools to answer: {user_query}. "
         "Allowed: sql, rag, calculator, data_analysis. "
+        "Rules: "
+        "Use sql for structured business data retrieval. "
+        "Use rag for policies, SOPs, procedures, rules, and documents. "
+        "Use calculator only when an actual mathematical calculation or "
+        "derived numerical result is required. "
+        "Use multiple tools only when each tool performs a necessary task. "
         "Respond with tools only."
     )
 
@@ -112,7 +130,143 @@ def determine_plan(user_query: str) -> List[str]:
         "data_analysis",
     }
 
-    return [tool for tool in tools if tool in allowed]
+    tools = [tool for tool in tools if tool in allowed]
+
+    # ---------------------------------------------------------
+    # Deterministic routing constraints
+    # ---------------------------------------------------------
+    q = user_query.lower()
+
+    has_policy_words = any(
+        word in q
+        for word in ("policy", "sop", "procedure", "rule")
+    )
+
+    has_data_words = any(
+        word in q
+        for word in (
+            "revenue",
+            "sales",
+            "cost",
+            "vendor",
+            "inventory",
+            "profit",
+            "expense",
+        )
+    )
+
+    has_rag_intent = any(
+        word in q
+        for word in (
+            "policy",
+            "sop",
+            "procedure",
+            "rule",
+            "violate",
+            "violation",
+            "why",
+            "explain",
+            "reason",
+            "document",
+        )
+    )
+
+    has_calculation_words = any(
+        word in q
+        for word in (
+            "percentage",
+            "percent",
+            "growth",
+            "increase",
+            "decrease",
+            "calculate",
+            "calculation",
+            "divide",
+            "multiplied",
+            "multiply",
+            "ratio",
+            "average",
+            "difference",
+        )
+    )
+
+    # Policy/document questions should not use SQL or calculator
+    # unless the query explicitly asks for business data as well.
+    if has_policy_words and not any(
+        word in q
+        for word in (
+            "revenue",
+            "sales",
+            "cost",
+            "profit",
+            "expense",
+        )
+    ):
+        tools = [
+            tool
+            for tool in tools
+            if tool not in {"sql", "calculator"}
+        ]
+
+        if "rag" not in tools:
+            tools.append("rag")
+
+            # RAG is only valid when the query has document/policy/explanation
+    # intent. This prevents the LLM from adding RAG to simple SQL queries.
+    if not has_rag_intent:
+        tools = [
+            tool
+            for tool in tools
+            if tool != "rag"
+        ]
+
+    # Calculator is only valid when an actual calculation is requested.
+    # This prevents questions such as "What was July revenue?"
+    # from incorrectly becoming SQL + calculator.
+    if not has_calculation_words:
+        tools = [
+            tool
+            for tool in tools
+            if tool != "calculator"
+        ]
+    # Data analysis is only valid for explicit trend/analysis requests.
+    # Prevent the LLM from adding it to ordinary calculations.
+    has_analysis_intent = any(
+        word in q
+        for word in (
+            "trend",
+            "analysis",
+            "analyze",
+            "breakdown",
+            "group by",
+            "segment",
+        )
+    )
+
+    if not has_analysis_intent:
+        tools = [
+            tool
+            for tool in tools
+            if tool != "data_analysis"
+        ]
+
+    # If a calculation is explicitly requested and SQL data is required,
+    # ensure SQL is included.
+    if has_calculation_words and has_data_words:
+        if "sql" not in tools:
+            tools.insert(0, "sql")
+
+        if "calculator" not in tools:
+            tools.append("calculator")
+
+    # Remove duplicates while preserving order.
+    seen = set()
+
+    return [
+        tool
+        for tool in tools
+        if not (tool in seen or seen.add(tool))
+    ]
 
 
 def generate_sql_query(user_query: str) -> str | None:
