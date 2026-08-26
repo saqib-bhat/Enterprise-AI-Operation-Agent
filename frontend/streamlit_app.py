@@ -15,7 +15,10 @@ st.sidebar.header("Connection")
 
 api_url = st.sidebar.text_input(
     "API URL",
-    value=os.getenv("API_URL", "http://localhost:8000")
+    value=os.getenv(
+        "API_URL",
+        "https://entopsaiagent-musf.onrender.com"
+    )
 )
 question = st.text_area(
     "Ask an operational question",
