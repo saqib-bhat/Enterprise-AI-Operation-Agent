@@ -1,5 +1,6 @@
 import streamlit as st
 import httpx
+import os
 
 st.set_page_config(page_title="Enterprise AI Operations Agent", layout="wide")
 
@@ -10,9 +11,11 @@ st.markdown(
 )
 
 st.sidebar.header("Connection")
+
+
 api_url = st.sidebar.text_input(
     "API URL",
-    value="http://127.0.0.1:8000",
+    value=os.getenv("API_URL", "http://localhost:8000")
 )
 question = st.text_area(
     "Ask an operational question",
