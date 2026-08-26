@@ -28,6 +28,8 @@ dist/
 *.sqlite
 *.sqlite3
 
+!data/operations.db
+
 # Vector store
 vector_store/
 
