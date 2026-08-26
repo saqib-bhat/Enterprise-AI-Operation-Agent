@@ -9,7 +9,7 @@ FORBIDDEN = re.compile(r"\b(insert|update|delete|drop|alter|truncate|attach|deta
 
 def _get_sqlite_path(database_url: str | None) -> str:
     if not database_url:
-        database_url = os.environ.get("DATABASE_URL") or "sqlite:///data/operations.db"
+        database_url = os.environ.get("DATABASE_URL") or "sqlite:////app/data/operations.db"
     if database_url == "sqlite:///:memory:":
         return ":memory:"
     if database_url.startswith("sqlite:///"):
