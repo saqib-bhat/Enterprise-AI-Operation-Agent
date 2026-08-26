@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Dict, Any, List
+import re
 
 from app.tools import (
     sql_tool,
@@ -91,6 +92,33 @@ def execute_tools(
 
             operations = state.get("calc_ops", [])
 
+                        # Parse direct percentage-of questions such as:
+            # "What is 15% of 470884.04?"
+            if not operations:
+                user_query = state.get("user_query", "")
+
+                match = re.search(
+                    r"(\d+(?:\.\d+)?)\s*%\s*of\s*\$?\s*([\d,]+(?:\.\d+)?)",
+                    user_query,
+                    re.IGNORECASE,
+                )
+
+                if match:
+                    percentage = float(match.group(1))
+                    value = float(match.group(2).replace(",", ""))
+
+                    operations = [
+                        {
+                            "op": "percentage_of",
+                            "args": [
+                                percentage,
+                                value,
+                            ],
+                        }
+                    ]
+
+                    state["calc_ops"] = operations
+
             # For the June → July percentage question, construct the
             # calculator operation from the SQL result.
             if not operations:
@@ -171,6 +199,12 @@ def execute_tools(
                     elif name == "growth_rate":
                         calculator_results[name] = (
                             calculator_tool.growth_rate(
+                                *args
+                            )
+                        )
+                    elif name == "percentage_of":
+                        calculator_results[name] = (
+                            calculator_tool.percentage_of(
                                 *args
                             )
                         )

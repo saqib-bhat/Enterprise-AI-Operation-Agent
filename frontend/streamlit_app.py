@@ -10,8 +10,10 @@ st.markdown(
 )
 
 st.sidebar.header("Connection")
-api_url = st.sidebar.text_input("API URL", value="http://localhost:8000")
-
+api_url = st.sidebar.text_input(
+    "API URL",
+    value="http://127.0.0.1:8000",
+)
 question = st.text_area(
     "Ask an operational question",
     value="Why did inventory costs increase in July?",
@@ -28,7 +30,11 @@ if st.button("Submit"):
             
             try:
                 payload = {"query": question}
-                res = httpx.post(f"{api_url}/chat", json=payload, timeout=30)
+                res = httpx.post(
+                    f"{api_url.rstrip('/')}/chat",
+                    json=payload,
+                    timeout=60,
+                )
                 
                 if res.status_code == 200:
                     response_data = res.json()

@@ -176,18 +176,23 @@ def determine_plan(user_query: str) -> List[str]:
         for word in (
             "percentage",
             "percent",
-            "growth",
-            "increase",
-            "decrease",
             "calculate",
             "calculation",
             "divide",
+            "divided",
             "multiplied",
             "multiply",
+            "times",
             "ratio",
             "average",
             "difference",
+            "subtract",
+            "add",
+            "sum",
         )
+    ) or any(
+        symbol in q
+        for symbol in ("%", "*", "/", "+", "-")
     )
 
     # Policy/document questions should not use SQL or calculator
@@ -337,11 +342,26 @@ def generate_sql_query(user_query: str) -> str | None:
     # ---------------------------------------------------------
     # June → July inventory cost comparison
     # ---------------------------------------------------------
+    # ---------------------------------------------------------
+# Inventory cost increase/comparison
+# ---------------------------------------------------------
     if (
         "inventory" in q
         and "cost" in q
-        and "june" in q
         and "july" in q
+        and any(
+            word in q
+            for word in (
+                "increase",
+                "increased",
+                "increase in",
+                "growth",
+                "change",
+                "compare",
+                "comparison",
+                "why",
+            )
+        )
     ):
         return """
         SELECT

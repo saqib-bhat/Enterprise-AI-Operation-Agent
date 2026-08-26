@@ -29,7 +29,7 @@ def _build_calculator_summary(calculations: Dict[str, Any]) -> str:
     parts = []
     for op, result in calculations.items():
         if isinstance(result, dict) and result.get("success"):
-            value = result.get("result")
+            value = result.get("value")
             if value is not None:
                 parts.append(f"{op}: {value}")
 

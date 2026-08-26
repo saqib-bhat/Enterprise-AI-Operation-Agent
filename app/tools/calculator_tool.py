@@ -66,3 +66,27 @@ def growth_rate(start: Any, end: Any, periods: int = 1) -> Dict[str, Any]:
         return {"success": True, "value": rate}
     except Exception:
         return {"success": False, "error": "Error computing growth rate"}
+
+def percentage_of(percentage: Any, value: Any) -> Dict[str, Any]:
+    """Calculate a percentage of a value.
+
+    Example:
+        percentage_of(15, 470884.04)
+        -> 70632.606
+    """
+    try:
+        percentage_f = _as_float(percentage)
+        value_f = _as_float(value)
+
+        result = (percentage_f / 100.0) * value_f
+
+        return {
+            "success": True,
+            "value": result,
+        }
+
+    except Exception:
+        return {
+            "success": False,
+            "error": "Invalid percentage or value",
+        }
