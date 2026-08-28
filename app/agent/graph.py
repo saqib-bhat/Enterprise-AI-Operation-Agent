@@ -121,25 +121,19 @@ def build_graph() -> StateGraph:
             if isinstance(result, dict):
                 state["final_response"] = result
 
-                if "text" in result:
+                # The response generator uses "Answer" as the
+                # canonical human-readable answer.
+                if result.get("Answer"):
+                    state["final_answer"] = result["Answer"]
+
+                elif result.get("text"):
                     state["final_answer"] = result["text"]
 
         # Ensure the state always has a usable final answer.
         if not state.get("final_answer"):
-            selected_tools = state.get(
-                "selected_tools",
-                [],
+            state["final_answer"] = (
+                "The request could not be completed."
             )
-
-            if selected_tools:
-                state["final_answer"] = (
-                    "Answer based on tools: "
-                    + ", ".join(selected_tools)
-                )
-            else:
-                state["final_answer"] = (
-                    "The request could not be completed."
-                )
 
         return state
 
