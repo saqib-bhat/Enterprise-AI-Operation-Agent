@@ -15,6 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
 COPY data ./data
+COPY vector_store ./vector_store
 COPY frontend ./frontend
 COPY scripts ./scripts
 COPY .env.example ./.env.example
