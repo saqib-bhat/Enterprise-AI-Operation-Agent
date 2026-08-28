@@ -99,3 +99,84 @@ def debug_database():
     except Exception as exc:
         result["error"] = str(exc)
         return result
+
+@app.get("/debug/rag")
+def debug_rag():
+    """Temporary RAG diagnostic endpoint."""
+
+    import json
+
+    result = {
+        "cwd": os.getcwd(),
+        "index_exists": False,
+        "metadata_exists": False,
+        "index_size": None,
+        "metadata_size": None,
+        "index_vectors": None,
+        "index_dimension": None,
+        "metadata_type": None,
+        "metadata_count": None,
+        "metadata_preview": None,
+        "errors": [],
+    }
+
+    index_path = "/app/vector_store/index.faiss"
+    metadata_path = "/app/vector_store/metadata.json"
+
+    # --------------------------------------------------
+    # Check FAISS and metadata files
+    # --------------------------------------------------
+
+    result["index_exists"] = os.path.exists(index_path)
+    result["metadata_exists"] = os.path.exists(metadata_path)
+
+    if result["index_exists"]:
+        result["index_size"] = os.path.getsize(index_path)
+
+    if result["metadata_exists"]:
+        result["metadata_size"] = os.path.getsize(metadata_path)
+
+    # --------------------------------------------------
+    # Try loading FAISS
+    # --------------------------------------------------
+
+    try:
+        import faiss
+
+        index = faiss.read_index(index_path)
+
+        result["index_vectors"] = index.ntotal
+        result["index_dimension"] = index.d
+
+    except Exception as exc:
+        result["errors"].append(
+            f"FAISS: {type(exc).__name__}: {exc}"
+        )
+
+    # --------------------------------------------------
+    # Try loading metadata
+    # --------------------------------------------------
+
+    try:
+        with open(metadata_path, "r", encoding="utf-8") as f:
+            metadata = json.load(f)
+
+        result["metadata_type"] = type(metadata).__name__
+
+        if isinstance(metadata, list):
+            result["metadata_count"] = len(metadata)
+            result["metadata_preview"] = metadata[:2]
+
+        elif isinstance(metadata, dict):
+            result["metadata_count"] = len(metadata)
+            result["metadata_preview"] = str(metadata)[:1000]
+
+        else:
+            result["metadata_preview"] = str(metadata)[:1000]
+
+    except Exception as exc:
+        result["errors"].append(
+            f"Metadata: {type(exc).__name__}: {exc}"
+        )
+
+    return result
