@@ -225,10 +225,27 @@ def determine_plan(user_query: str) -> List[str]:
             if tool != "rag"
         ]
 
-    # Calculator is only valid when an actual calculation is requested.
-    # This prevents questions such as "What was July revenue?"
-    # from incorrectly becoming SQL + calculator.
-    if not has_calculation_words:
+    # Calculator is required for calculations that cannot be directly
+    # answered by SQL.
+    #
+    # SQL can directly calculate aggregates such as AVG, SUM, COUNT,
+    # MIN, and MAX, so "average revenue" does not require the calculator.
+    has_sql_aggregate = any(
+        word in q
+        for word in (
+            "average",
+            "avg",
+            "total",
+            "sum",
+            "count",
+            "minimum",
+            "maximum",
+            "min",
+            "max",
+        )
+    )
+
+    if not has_calculation_words or has_sql_aggregate:
         tools = [
             tool
             for tool in tools
@@ -257,11 +274,31 @@ def determine_plan(user_query: str) -> List[str]:
 
     # If a calculation is explicitly requested and SQL data is required,
     # ensure SQL is included.
+    #
+    # SQL handles native aggregates such as AVG/SUM/COUNT directly.
+    # Calculator is only added when a separate mathematical operation
+    # is actually required after retrieving the data.
     if has_calculation_words and has_data_words:
         if "sql" not in tools:
             tools.insert(0, "sql")
 
-        if "calculator" not in tools:
+        sql_aggregate_question = any(
+            word in q
+            for word in (
+                "average",
+                "avg",
+                "mean",
+                "total",
+                "sum",
+                "count",
+                "minimum",
+                "maximum",
+                "min",
+                "max",
+            )
+        )
+
+        if not sql_aggregate_question and "calculator" not in tools:
             tools.append("calculator")
 
     # Remove duplicates while preserving order.
@@ -315,6 +352,28 @@ def generate_sql_query(user_query: str) -> str | None:
                 END
             ) AS july_revenue
         FROM sales
+        """.strip()
+
+    # ---------------------------------------------------------
+    # July average revenue per sale
+    # ---------------------------------------------------------
+    if (
+        "july" in q
+        and "revenue" in q
+        and any(
+            word in q
+            for word in (
+                "average",
+                "avg",
+                "mean",
+            )
+        )
+    ):
+        return """
+        SELECT
+            AVG(revenue) AS average_revenue_per_sale
+        FROM sales
+        WHERE strftime('%m', date) = '07'
         """.strip()
 
     # ---------------------------------------------------------
