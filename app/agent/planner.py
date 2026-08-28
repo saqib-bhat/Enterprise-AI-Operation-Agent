@@ -9,21 +9,56 @@ from app.llm.providers import MockProvider
 def determine_plan(user_query: str) -> List[str]:
     """Determine which tools are required for the user query.
 
-    MockProvider mode uses deterministic heuristics so tests do not require
-    network access or an LLM API.
+    Future/prediction questions are rejected because the current agent
+    does not have a forecasting model. This guard applies to both
+    MockProvider and production LLM providers.
     """
-    provider = get_provider()
 
+    provider = get_provider()
+    q = user_query.lower()
+
+    # ---------------------------------------------------------
+    # Future / prediction questions
+    # ---------------------------------------------------------
+    # The agent has no forecasting model. Never answer a future
+    # question by incorrectly reusing historical SQL data.
+    has_future_intent = any(
+        phrase in q
+        for phrase in (
+            "next year",
+            "next month",
+            "next quarter",
+            "future",
+            "forecast",
+            "predict",
+            "prediction",
+            "will be",
+            "expected revenue",
+            "expected sales",
+        )
+    )
+
+    if has_future_intent:
+        return []
+
+    # ---------------------------------------------------------
+    # MockProvider mode
+    # ---------------------------------------------------------
     if isinstance(provider, MockProvider):
-        q = user_query.lower()
         plan = []
 
         # SQL is required for structured business/data questions.
-        # But avoid SQL for pure policy/document questions that only need RAG.
+        # Avoid SQL for pure policy/document questions.
         has_policy_words = any(
             word in q
-            for word in ("policy", "sop", "procedure", "rule")
+            for word in (
+                "policy",
+                "sop",
+                "procedure",
+                "rule",
+            )
         )
+
         has_data_words = any(
             word in q
             for word in (
@@ -37,10 +72,12 @@ def determine_plan(user_query: str) -> List[str]:
                 "vendor",
             )
         )
-        # "inventory" alone should not trigger SQL if it's a policy question
+
         has_inventory = "inventory" in q
 
-        if (has_data_words or (has_inventory and not has_policy_words)):
+        if has_data_words or (
+            has_inventory and not has_policy_words
+        ):
             plan.append("sql")
 
         # RAG is required for document/policy questions.
@@ -60,7 +97,8 @@ def determine_plan(user_query: str) -> List[str]:
         ):
             plan.append("rag")
 
-        # Calculator is required for numerical calculations.
+        # Calculator is required for explicit mathematical
+        # calculations that are not simple SQL aggregates.
         if any(
             word in q
             for word in (
@@ -77,7 +115,7 @@ def determine_plan(user_query: str) -> List[str]:
 
             plan.append("calculator")
 
-        # Data analysis for explicit trend/analysis questions.
+        # Data analysis for explicit analysis/trend questions.
         if any(
             word in q
             for word in (
@@ -97,19 +135,21 @@ def determine_plan(user_query: str) -> List[str]:
             if not (tool in seen or seen.add(tool))
         ]
 
-        # Production/non-mock mode.
-    # The LLM proposes tools, but deterministic business rules validate
-    # the proposal before execution. This prevents unnecessary tools
-    # from being selected for simple retrieval questions.
+    # ---------------------------------------------------------
+    # Production / LLM mode
+    # ---------------------------------------------------------
+    # The LLM proposes tools, but deterministic business rules
+    # validate the proposal before execution.
 
     prompt = (
-        f"Produce a comma-separated list of tools to answer: {user_query}. "
+        f"Produce a comma-separated list of tools to answer: "
+        f"{user_query}. "
         "Allowed: sql, rag, calculator, data_analysis. "
         "Rules: "
         "Use sql for structured business data retrieval. "
         "Use rag for policies, SOPs, procedures, rules, and documents. "
-        "Use calculator only when an actual mathematical calculation or "
-        "derived numerical result is required. "
+        "Use calculator only when an actual mathematical calculation "
+        "or derived numerical result is required. "
         "Use multiple tools only when each tool performs a necessary task. "
         "Respond with tools only."
     )
@@ -130,16 +170,24 @@ def determine_plan(user_query: str) -> List[str]:
         "data_analysis",
     }
 
-    tools = [tool for tool in tools if tool in allowed]
+    tools = [
+        tool
+        for tool in tools
+        if tool in allowed
+    ]
 
     # ---------------------------------------------------------
     # Deterministic routing constraints
     # ---------------------------------------------------------
-    q = user_query.lower()
 
     has_policy_words = any(
         word in q
-        for word in ("policy", "sop", "procedure", "rule")
+        for word in (
+            "policy",
+            "sop",
+            "procedure",
+            "rule",
+        )
     )
 
     has_data_words = any(
@@ -192,11 +240,19 @@ def determine_plan(user_query: str) -> List[str]:
         )
     ) or any(
         symbol in q
-        for symbol in ("%", "*", "/", "+", "-")
+        for symbol in (
+            "%",
+            "*",
+            "/",
+            "+",
+            "-",
+        )
     )
 
-    # Policy/document questions should not use SQL or calculator
-    # unless the query explicitly asks for business data as well.
+    # ---------------------------------------------------------
+    # Policy/document routing
+    # ---------------------------------------------------------
+
     if has_policy_words and not any(
         word in q
         for word in (
@@ -210,14 +266,16 @@ def determine_plan(user_query: str) -> List[str]:
         tools = [
             tool
             for tool in tools
-            if tool not in {"sql", "calculator"}
+            if tool not in {
+                "sql",
+                "calculator",
+            }
         ]
 
         if "rag" not in tools:
             tools.append("rag")
 
-            # RAG is only valid when the query has document/policy/explanation
-    # intent. This prevents the LLM from adding RAG to simple SQL queries.
+    # RAG should only be used when the query has RAG intent.
     if not has_rag_intent:
         tools = [
             tool
@@ -225,16 +283,17 @@ def determine_plan(user_query: str) -> List[str]:
             if tool != "rag"
         ]
 
-    # Calculator is required for calculations that cannot be directly
-    # answered by SQL.
-    #
-    # SQL can directly calculate aggregates such as AVG, SUM, COUNT,
-    # MIN, and MAX, so "average revenue" does not require the calculator.
+    # ---------------------------------------------------------
+    # Calculator routing
+    # ---------------------------------------------------------
+
+    # SQL can directly calculate standard aggregates.
     has_sql_aggregate = any(
         word in q
         for word in (
             "average",
             "avg",
+            "mean",
             "total",
             "sum",
             "count",
@@ -245,14 +304,20 @@ def determine_plan(user_query: str) -> List[str]:
         )
     )
 
-    if not has_calculation_words or has_sql_aggregate:
+    if (
+        not has_calculation_words
+        or has_sql_aggregate
+    ):
         tools = [
             tool
             for tool in tools
             if tool != "calculator"
         ]
-    # Data analysis is only valid for explicit trend/analysis requests.
-    # Prevent the LLM from adding it to ordinary calculations.
+
+    # ---------------------------------------------------------
+    # Data analysis routing
+    # ---------------------------------------------------------
+
     has_analysis_intent = any(
         word in q
         for word in (
@@ -272,12 +337,10 @@ def determine_plan(user_query: str) -> List[str]:
             if tool != "data_analysis"
         ]
 
-    # If a calculation is explicitly requested and SQL data is required,
-    # ensure SQL is included.
-    #
-    # SQL handles native aggregates such as AVG/SUM/COUNT directly.
-    # Calculator is only added when a separate mathematical operation
-    # is actually required after retrieving the data.
+    # ---------------------------------------------------------
+    # Ensure SQL for calculations requiring business data
+    # ---------------------------------------------------------
+
     if has_calculation_words and has_data_words:
         if "sql" not in tools:
             tools.insert(0, "sql")
@@ -298,10 +361,16 @@ def determine_plan(user_query: str) -> List[str]:
             )
         )
 
-        if not sql_aggregate_question and "calculator" not in tools:
+        if (
+            not sql_aggregate_question
+            and "calculator" not in tools
+        ):
             tools.append("calculator")
 
-    # Remove duplicates while preserving order.
+    # ---------------------------------------------------------
+    # Remove duplicates while preserving order
+    # ---------------------------------------------------------
+
     seen = set()
 
     return [
@@ -309,8 +378,6 @@ def determine_plan(user_query: str) -> List[str]:
         for tool in tools
         if not (tool in seen or seen.add(tool))
     ]
-
-
 def generate_sql_query(user_query: str) -> str | None:
     """Generate safe, read-only SQL for supported business questions."""
 
