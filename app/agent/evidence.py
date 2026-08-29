@@ -30,22 +30,77 @@ def collect_evidence(state: Dict[str, Any]) -> List[Dict[str, Any]]:
     docs = state.get("retrieved_documents", []) or []
 
     for doc in docs:
+
         if not isinstance(doc, dict):
             continue
 
-        # Handle failed retrieval results.
-        if doc.get("success") is False:
-            evidence.append(
-                {
+        # -----------------------------------------------------
+        # RAG result wrapper
+        #
+        # Example:
+        # {
+        #     "success": True,
+        #     "results": [...]
+        # }
+        # -----------------------------------------------------
+        if "results" in doc:
+
+            if doc.get("success") is False:
+                evidence.append(
+                    {
+                        "source": "rag",
+                        "summary": "RAG retrieval failed",
+                        "error": doc.get(
+                            "error",
+                            "Unknown RAG error",
+                        ),
+                    }
+                )
+                continue
+
+            rag_results = doc.get("results", [])
+
+            if not isinstance(rag_results, list):
+                continue
+
+            # Empty retrieval means NO evidence.
+            for result in rag_results:
+
+                if not isinstance(result, dict):
+                    continue
+
+                source = result.get("source")
+                page = result.get("page")
+                chunk_id = result.get("chunk_id")
+                chunk_index = result.get("chunk_index")
+                text = result.get("text")
+
+                # Do not create fake "Unknown document" evidence.
+                if not source and not text:
+                    continue
+
+                rag_evidence = {
                     "source": "rag",
-                    "summary": "RAG retrieval failed",
-                    "error": doc.get("error", "Unknown RAG error"),
+                    "document": source,
+                    "page": page,
+                    "chunk_id": chunk_id,
+                    "chunk_index": chunk_index,
+                    "text": text,
                 }
-            )
+
+                rag_evidence = {
+                    key: value
+                    for key, value in rag_evidence.items()
+                    if value is not None and value != ""
+                }
+
+                evidence.append(rag_evidence)
+
             continue
 
-        # RAG documents may expose metadata directly or inside
-        # a metadata dictionary depending on the retrieval layer.
+        # -----------------------------------------------------
+        # Direct RAG document
+        # -----------------------------------------------------
         metadata = doc.get("metadata", {})
 
         if not isinstance(metadata, dict):
@@ -54,7 +109,6 @@ def collect_evidence(state: Dict[str, Any]) -> List[Dict[str, Any]]:
         source = (
             doc.get("source")
             or metadata.get("source")
-            or "Unknown document"
         )
 
         page = (
@@ -78,6 +132,10 @@ def collect_evidence(state: Dict[str, Any]) -> List[Dict[str, Any]]:
             or metadata.get("chunk_index")
         )
 
+        # Do not create evidence for an empty/invalid document.
+        if not source and not text:
+            continue
+
         rag_evidence = {
             "source": "rag",
             "document": source,
@@ -87,7 +145,6 @@ def collect_evidence(state: Dict[str, Any]) -> List[Dict[str, Any]]:
             "text": text,
         }
 
-        # Remove fields that have no value.
         rag_evidence = {
             key: value
             for key, value in rag_evidence.items()
@@ -123,7 +180,9 @@ def collect_evidence(state: Dict[str, Any]) -> List[Dict[str, Any]]:
             }
         )
 
-    # Store evidence back into state.
+    # ---------------------------------------------------------
+    # Store evidence back into state
+    # ---------------------------------------------------------
     state["evidence"] = evidence
 
     return evidence

@@ -8,8 +8,16 @@ from .embeddings import embed_texts
 from .vector_store import load_index
 
 
+# FAISS IndexFlatL2 returns squared Euclidean distance.
+# Lower distance means greater similarity.
+#
+# Results above this threshold are considered too weak
+# to be reliable evidence.
+MAX_L2_DISTANCE = 1.0
+
+
 def retrieve(query: str, top_k: int = 3) -> Dict[str, Any]:
-    """Retrieve the most relevant document chunks for a query."""
+    """Retrieve relevant document chunks for a query."""
 
     if not query or not query.strip():
         return {
@@ -17,7 +25,7 @@ def retrieve(query: str, top_k: int = 3) -> Dict[str, Any]:
             "error": "Empty query",
         }
 
-    # Load the persisted FAISS index and its metadata.
+    # Load persisted FAISS index and metadata.
     index, metadata = load_index()
 
     if index is None:
@@ -32,24 +40,29 @@ def retrieve(query: str, top_k: int = 3) -> Dict[str, Any]:
             "results": [],
         }
 
-    # Generate the embedding for the user query.
+    # Generate query embedding.
     try:
         q_emb = embed_texts([query]).astype("float32")
     except Exception:
-        # Embedding model initialization or encoding failed.
-        # Return a controlled failure without exposing internal details.
         return {
             "success": False,
             "error": "RAG embedding model unavailable",
         }
 
-    # Search the FAISS index.
+    # Search FAISS.
     D, I = index.search(q_emb, top_k)
 
     results = []
 
     for score, idx in zip(D[0], I[0]):
+
         if idx < 0 or idx >= len(metadata):
+            continue
+
+        distance = float(score)
+
+        # Reject weak semantic matches.
+        if distance > MAX_L2_DISTANCE:
             continue
 
         meta = metadata[idx]
@@ -60,7 +73,7 @@ def retrieve(query: str, top_k: int = 3) -> Dict[str, Any]:
                 "source": meta.get("source"),
                 "page": meta.get("page"),
                 "text": meta.get("text"),
-                "score": float(score),
+                "score": distance,
             }
         )
 

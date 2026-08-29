@@ -217,9 +217,6 @@ def build_graph() -> StateGraph:
         "Verifier",
     )
 
-    # ---------------------------------------------------------
-    # Verifier → ResponseGenerator / END
-    # ---------------------------------------------------------
     def verifier_path(state: AgentState) -> str:
         verification = state.get(
             "verification_result",
@@ -229,7 +226,12 @@ def build_graph() -> StateGraph:
         if verification.get("ok", True):
             return "ResponseGenerator"
 
-        return "END"
+        state["final_answer"] = (
+            "I do not have sufficient information to answer "
+            "the question from the available evidence."
+        )
+
+        return "ResponseGenerator"
 
     graph.add_conditional_edges(
         "Verifier",

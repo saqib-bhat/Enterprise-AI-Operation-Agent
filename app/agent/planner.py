@@ -56,6 +56,13 @@ def determine_plan(user_query: str) -> List[str]:
                 "sop",
                 "procedure",
                 "rule",
+                "ceo",
+                "chief executive",
+                "leadership",
+                "executive",
+                "management",
+                "company information",
+                "company background",
             )
         )
 
@@ -80,7 +87,6 @@ def determine_plan(user_query: str) -> List[str]:
         ):
             plan.append("sql")
 
-        # RAG is required for document/policy questions.
         if any(
             word in q
             for word in (
@@ -88,6 +94,8 @@ def determine_plan(user_query: str) -> List[str]:
                 "sop",
                 "procedure",
                 "rule",
+                "process",
+                "evaluation",
                 "violate",
                 "violation",
                 "why",
@@ -216,8 +224,41 @@ def determine_plan(user_query: str) -> List[str]:
             "explain",
             "reason",
             "document",
+            "ceo",
+            "chief executive",
+            "leadership",
+            "executive",
+            "management",
+            "company information",
+            "company background",
         )
     )
+
+        # ---------------------------------------------------------
+    # Company/document questions must not use SQL.
+    # ---------------------------------------------------------
+    has_company_info_intent = any(
+        phrase in q
+        for phrase in (
+            "ceo",
+            "chief executive",
+            "leadership",
+            "executive",
+            "management",
+            "company information",
+            "company background",
+        )
+    )
+
+    if has_company_info_intent:
+        tools = [
+            tool
+            for tool in tools
+            if tool not in {"sql", "calculator", "data_analysis"}
+        ]
+
+        if "rag" not in tools:
+            tools.append("rag")
 
     has_calculation_words = any(
         word in q
