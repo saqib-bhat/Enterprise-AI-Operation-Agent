@@ -4,7 +4,7 @@ A production-oriented AI operations assistant that answers business questions us
 
 ## Features
 
-- Agentic workflow: Planner → Tools → Response → Verification
+- Agentic workflow: Planner → Router → Tools → Evidence → Verification → Response
 - SQL/data analysis for operational questions
 - RAG over company policies and SOP documents
 - FAISS + Sentence Transformers for CPU-friendly retrieval
@@ -13,6 +13,7 @@ A production-oriented AI operations assistant that answers business questions us
 - Docker / Docker Compose
 - Evidence-aware responses
 - Automated test suite: **62 tests passing**
+- RAG evaluation: **85% Hit@1 and 100% Hit@3** across 20 policy and SOP queries
 
 ## Architecture
 
@@ -52,7 +53,7 @@ A production-oriented AI operations assistant that answers business questions us
             Valid          Invalid
               |               |
               v               v
-        Final Answer      Retry/Refuse
+           Final Answer        Refuse
 ```
 
 ## Project Structure
@@ -82,7 +83,9 @@ ENTERPRISE AI OPERATIONS AGENT/
 │   │   └── retrieval.py
 │   │
 │   ├── tools/
-│   │   └── data_analysis_tool.py
+│   │   ├── calculator_tool.py
+│   │   ├── data_analysis_tool.py
+│   │   └── sql_tool.py
 │   │
 │   └── config.py
 │
@@ -116,10 +119,10 @@ ENTERPRISE AI OPERATIONS AGENT/
 
 ## Configuration
 
-For a real LLM, create `.env` from `.env.example`:
+For local development without API costs, use mock mode. For natural-language responses, configure Groq in `.env`:
 
 ```env
-LLM_PROVIDER=mock
+LLM_PROVIDER=groq
 GROQ_API_KEY=your_api_key
 GROQ_MODEL=llama-3.1-8b-instant
 DATABASE_URL=sqlite:///./data/operations.db
@@ -127,7 +130,9 @@ VECTOR_STORE_PATH=./vector_store
 LOG_LEVEL=INFO
 ```
 
-Docker Compose currently uses mock mode:
+Never commit `.env` or API keys. `.env.example` is safe to commit.
+
+Docker Compose reads these values from `.env`. Use `mock` for deterministic local testing or `groq` for generated answers:
 
 ```env
 LLM_PROVIDER=mock
@@ -150,6 +155,20 @@ Run the API:
 uvicorn app.api.main:app --reload
 ```
 
+In a second terminal, run the Streamlit frontend:
+
+```powershell
+streamlit run frontend/streamlit_app.py
+```
+
+Open `http://127.0.0.1:8501`. The local frontend defaults to `http://127.0.0.1:8000`; override it with `API_URL` when needed.
+
+If the PDFs change, rebuild the RAG index:
+
+```powershell
+python scripts/ingest_documents.py
+```
+
 Health check:
 
 ```powershell
@@ -169,8 +188,8 @@ Invoke-RestMethod `
 ## Run with Docker
 
 ```powershell
-docker compose build app
-docker compose up
+docker compose build --no-cache
+docker compose up -d
 ```
 
 Check the container:
@@ -184,6 +203,8 @@ Stop:
 ```powershell
 docker compose down
 ```
+
+The API is available at `http://127.0.0.1:8000` and Streamlit at `http://127.0.0.1:8501`. Inside Compose, Streamlit reaches the API through `http://app:8000`.
 
 The Docker image installs **CPU-only PyTorch**, avoiding unnecessary CUDA/NVIDIA packages.
 
@@ -222,6 +243,8 @@ Response Generation
    ↓
 Verification
 ```
+
+RAG responses expose the document filename, page number, and a short relevant excerpt. Full retrieved text is used internally for grounding but is not returned as API evidence.
 
 ## Testing
 
@@ -270,12 +293,21 @@ Response includes:
   "query": "...",
   "answer": "...",
   "tools_used": ["sql"],
-  "evidence": [],
-  "verification": {},
+   "evidence": [
+      {
+         "source": "rag",
+         "document": "inventory_policy.pdf",
+         "page": 1,
+         "excerpt": "...reorder threshold..."
+      }
+   ],
+   "verification": {"ok": true, "attempts": 1},
    "errors": [],
    "latency": {}
 }
 ```
+
+Unsupported forecasting questions are refused because the agent does not contain a forecasting model. Empty queries return HTTP `422`.
 
 ## Current Status
 
@@ -288,6 +320,7 @@ Response includes:
 | CPU Embeddings | Working |
 | Verification | Working |
 | Tests | **62 passing** |
+| RAG evaluation | **85% Hit@1 / 100% Hit@3** |
 
 ## Design Goals
 
@@ -297,4 +330,14 @@ Response includes:
 - Containerized execution
 - Testable components
 - Easy LLM provider replacement
+
+## Deployment
+
+Render deployments use the same repository and `main` branch. Deploy the backend and Streamlit services after changes. Configure the Streamlit service with:
+
+```env
+API_URL=https://your-api-service.onrender.com
+```
+
+The frontend uses `http://127.0.0.1:8000` locally, `http://app:8000` in Docker Compose, and the configured `API_URL` on Render.
 
