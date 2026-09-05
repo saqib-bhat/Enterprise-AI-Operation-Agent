@@ -47,6 +47,23 @@ vector_store/
 
 # Pytest
 .cache/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Type checkers and linters
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# Notebook caches
+.ipynb_checkpoints/
+
+# Credentials and private keys
+*.pem
+*.key
+*.p12
 
 # Mac
 .DS_Store
