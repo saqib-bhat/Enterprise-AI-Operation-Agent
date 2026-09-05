@@ -17,7 +17,7 @@ api_url = st.sidebar.text_input(
     "API URL",
     value=os.getenv(
         "API_URL",
-        "https://entopsaiagent-musf.onrender.com"
+        os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
     )
 )
 question = st.text_area(
