@@ -63,6 +63,16 @@ def determine_plan(user_query: str) -> List[str]:
                 "management",
                 "company information",
                 "company background",
+                "minimum stock",
+                "reorder",
+                "approval",
+                "emergency restock",
+                "receiving",
+                "inspection",
+                "reconciliation",
+                "vendor evaluation",
+                "vendor contract",
+                "procurement",
             )
         )
 
@@ -81,9 +91,35 @@ def determine_plan(user_query: str) -> List[str]:
         )
 
         has_inventory = "inventory" in q
+        has_analysis_intent = any(
+            word in q
+            for word in (
+                "trend",
+                "analysis",
+                "analyze",
+                "breakdown",
+                "group by",
+                "segment",
+            )
+        )
 
-        if has_data_words or (
-            has_inventory and not has_policy_words
+        has_numeric_data_intent = any(
+            word in q
+            for word in (
+                "revenue",
+                "sales",
+                "compare",
+                "percentage",
+                "cost",
+                "increase",
+                "decrease",
+            )
+        )
+
+        if (
+            (has_data_words and not has_policy_words and not has_analysis_intent)
+            or (has_inventory and not has_policy_words)
+            or (has_numeric_data_intent and "cost" in q)
         ):
             plan.append("sql")
 
@@ -101,6 +137,16 @@ def determine_plan(user_query: str) -> List[str]:
                 "why",
                 "explain",
                 "reason",
+                "minimum stock",
+                "reorder",
+                "approval",
+                "emergency restock",
+                "receiving",
+                "inspection",
+                "reconciliation",
+                "vendor evaluation",
+                "vendor contract",
+                "procurement",
             )
         ):
             plan.append("rag")
@@ -112,12 +158,15 @@ def determine_plan(user_query: str) -> List[str]:
             for word in (
                 "percentage",
                 "percent",
-                "growth",
-                "increase",
-                "decrease",
-                "change",
+                "calculate",
+                "calculation",
+                "divide",
+                "divided",
+                "multiply",
+                "multiplied",
+                "ratio",
             )
-        ):
+        ) or any(symbol in q for symbol in ("%", "*", "/", "+", "-")):
             if "sql" not in plan:
                 plan.append("sql")
 
@@ -195,6 +244,16 @@ def determine_plan(user_query: str) -> List[str]:
             "sop",
             "procedure",
             "rule",
+            "minimum stock",
+            "reorder",
+            "approval",
+            "emergency restock",
+            "receiving",
+            "inspection",
+            "reconciliation",
+            "vendor evaluation",
+            "vendor contract",
+            "procurement",
         )
     )
 
@@ -231,6 +290,16 @@ def determine_plan(user_query: str) -> List[str]:
             "management",
             "company information",
             "company background",
+            "minimum stock",
+            "reorder",
+            "approval",
+            "emergency restock",
+            "receiving",
+            "inspection",
+            "reconciliation",
+            "vendor evaluation",
+            "vendor contract",
+            "procurement",
         )
     )
 
@@ -377,6 +446,8 @@ def determine_plan(user_query: str) -> List[str]:
             for tool in tools
             if tool != "data_analysis"
         ]
+    elif "data_analysis" not in tools:
+        tools.append("data_analysis")
 
     # ---------------------------------------------------------
     # Ensure SQL for calculations requiring business data

@@ -119,7 +119,7 @@ ENTERPRISE AI OPERATIONS AGENT/
 For a real LLM, create `.env` from `.env.example`:
 
 ```env
-LLM_PROVIDER=groq
+LLM_PROVIDER=mock
 GROQ_API_KEY=your_api_key
 GROQ_MODEL=llama-3.1-8b-instant
 DATABASE_URL=sqlite:///./data/operations.db
@@ -272,7 +272,8 @@ Response includes:
   "tools_used": ["sql"],
   "evidence": [],
   "verification": {},
-  "errors": {}
+   "errors": [],
+   "latency": {}
 }
 ```
 

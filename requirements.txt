@@ -15,4 +15,5 @@ pytest==8.4.2
 httpx==0.26.0
 loguru==0.7.0
 pypdf==6.16.1
+reportlab==4.4.4
 requests==2.34.2

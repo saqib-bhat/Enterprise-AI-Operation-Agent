@@ -3,17 +3,23 @@ import os
 import re
 import sqlite3
 from typing import Any, Dict, List
+from app.config import settings
 
 FORBIDDEN = re.compile(r"\b(insert|update|delete|drop|alter|truncate|attach|detach|replace)\b", flags=re.IGNORECASE)
 
 
 def _get_sqlite_path(database_url: str | None) -> str:
     if not database_url:
-        database_url = os.environ.get("DATABASE_URL") or "sqlite:////app/data/operations.db"
+        database_url = os.environ.get("DATABASE_URL") or settings.database_url
     if database_url == "sqlite:///:memory:":
         return ":memory:"
     if database_url.startswith("sqlite:///"):
-        return database_url.replace("sqlite:///", "", 1)
+        path = database_url.replace("sqlite:///", "", 1)
+        if path != ":memory:":
+            parent = os.path.dirname(path)
+            if parent:
+                os.makedirs(parent, exist_ok=True)
+        return path
     # fallback: treat as file path
     return database_url
 

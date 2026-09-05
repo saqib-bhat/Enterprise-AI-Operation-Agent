@@ -50,7 +50,7 @@ def ensure_documents_exist():
         c.save()
 
 
-def ingest_all(chunk_size=800, overlap=200):
+def ingest_all(chunk_size=200, overlap=30):
     ensure_documents_exist()
     docs = ingest_documents(Path('data/documents'))
     chunks = chunk_documents(docs, chunk_size=chunk_size, overlap=overlap)

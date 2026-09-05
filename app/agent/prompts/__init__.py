@@ -1,1 +1,1 @@
-"""LangGraph prompts package.""
+"""LangGraph prompts package."""

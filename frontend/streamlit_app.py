@@ -79,9 +79,10 @@ if st.button("Submit"):
                 for i, doc in enumerate(evidence, 1):
                     source = doc.get("source", "Unknown")
                     page = doc.get("page", "")
-                    text = doc.get("text", "")
+                    excerpt = doc.get("excerpt", "")
                     st.markdown(f"**{i}. {source}**" + (f" (page {page})" if page else ""))
-                    st.write(text)
+                    if excerpt:
+                        st.caption(excerpt)
             
             # Verification section
             verification = response_data.get("verification", {})

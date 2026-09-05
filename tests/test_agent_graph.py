@@ -27,6 +27,30 @@ def test_sql_only_routing(monkeypatch):
     assert st["sql_query"].lower().startswith("select")
     assert st["sql_results"]["success"] is True
     assert st["sql_results"]["row_count"] >= 1
+
+
+def test_trend_analysis_routing(monkeypatch):
+    setup_mock_provider(monkeypatch)
+    st = run_graph("Show the trend analysis for sales revenue")
+
+    assert st["selected_tools"] == ["data_analysis"]
+    assert st["tool_results"]["data_analysis"]["success"] is True
+    assert st["verification_result"]["ok"] is True
+    assert st["final_answer"]
+    assert "Data Analysis:" in st["final_answer"]
+
+
+def test_inventory_policy_comparison_routing(monkeypatch):
+    setup_mock_provider(monkeypatch)
+
+    st = run_graph(
+        "Why did inventory cost increase in July and does this violate policy?"
+    )
+
+    assert st["selected_tools"] == ["sql", "rag"]
+    assert st["sql_results"]["success"] is True
+    assert st["tool_results"]["rag"]["success"] is True
+    assert st["verification_result"]["ok"] is True
     
 def test_rag_only_routing(monkeypatch):
     setup_mock_provider(monkeypatch)

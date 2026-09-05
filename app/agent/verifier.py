@@ -22,8 +22,11 @@ def verify(state: Dict[str, Any]) -> Dict[str, Any]:
     tool_results = state.get("tool_results", {}) or {}
     selected_tools = state.get("selected_tools", []) or []
 
-    ok = True
+    ok = bool(selected_tools)
     reasons = []
+
+    if not selected_tools:
+        reasons.append("No tool was selected for this request")
 
     # ---------------------------------------------------------
     # Tool execution checks

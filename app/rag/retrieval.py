@@ -6,6 +6,7 @@ import numpy as np
 
 from .embeddings import embed_texts
 from .vector_store import load_index
+import re
 
 
 # FAISS IndexFlatL2 returns squared Euclidean distance.
@@ -13,7 +14,7 @@ from .vector_store import load_index
 #
 # Results above this threshold are considered too weak
 # to be reliable evidence.
-MAX_L2_DISTANCE = 1.0
+MAX_L2_DISTANCE = 1.2
 
 
 def retrieve(query: str, top_k: int = 3) -> Dict[str, Any]:
@@ -53,6 +54,7 @@ def retrieve(query: str, top_k: int = 3) -> Dict[str, Any]:
     D, I = index.search(q_emb, top_k)
 
     results = []
+    matched_indices = set()
 
     for score, idx in zip(D[0], I[0]):
 
@@ -74,6 +76,37 @@ def retrieve(query: str, top_k: int = 3) -> Dict[str, Any]:
                 "page": meta.get("page"),
                 "text": meta.get("text"),
                 "score": distance,
+            }
+        )
+        matched_indices.add(int(idx))
+
+    # Embeddings can miss short, exact operational terms. Add lexical matches
+    # from the indexed text so section-specific policy questions remain findable.
+    terms = {
+        term
+        for term in re.findall(r"[a-z0-9]+", query.lower())
+        if len(term) >= 5
+    }
+    lexical_matches = []
+    for idx, meta in enumerate(metadata):
+        if idx in matched_indices:
+            continue
+        text = str(meta.get("text", "")).lower()
+        overlap = sum(term in text for term in terms)
+        if overlap:
+            lexical_matches.append((overlap, idx, meta))
+
+    lexical_matches.sort(key=lambda item: item[0], reverse=True)
+    for overlap, idx, meta in lexical_matches:
+        if len(results) >= top_k:
+            break
+        results.append(
+            {
+                "chunk_id": meta.get("chunk_id"),
+                "source": meta.get("source"),
+                "page": meta.get("page"),
+                "text": meta.get("text"),
+                "score": 1.0 - min(overlap, 10) / 100,
             }
         )
 

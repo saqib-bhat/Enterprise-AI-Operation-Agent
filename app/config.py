@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    llm_provider: str = "groq"
+    llm_provider: str = "mock"
     groq_api_key: str | None = None
     groq_model: str = "llama-3.1-8b-instant"
     database_url: str = "sqlite:///./data/operations.db"

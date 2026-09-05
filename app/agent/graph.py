@@ -58,6 +58,22 @@ def build_graph() -> StateGraph:
                     "Unable to generate SQL query"
                 )
 
+        if "data_analysis" in state["plan"] and not state.get("analysis_params"):
+            state["analysis_params"] = {
+                "operation": "trend" if any(
+                    word in query.lower()
+                    for word in ("trend", "over time", "by month", "monthly")
+                ) else "groupby",
+                "source": "inventory" if "inventory" in query.lower() else "sales",
+                "group_by": ["category"],
+                "aggregations": {
+                    "total_cost" if "inventory" in query.lower() else "revenue": "sum",
+                },
+                "date_column": "date",
+                "metric": "total_cost" if "inventory" in query.lower() else "revenue",
+                "freq": "ME",
+            }
+
         return state
 
     # ---------------------------------------------------------

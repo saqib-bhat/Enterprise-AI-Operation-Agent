@@ -1,12 +1,54 @@
 from __future__ import annotations
 
+import re
 from typing import Dict, Any, List
+
+
+def _build_excerpt(text: Any, query: str = "", limit: int = 220) -> str:
+    """Return a short, readable evidence excerpt without exposing full pages."""
+    excerpt = " ".join(str(text or "").split())
+    if len(excerpt) <= limit:
+        return excerpt
+
+    query_terms = sorted(
+        {
+            term.lower()
+            for term in re.findall(r"[A-Za-z0-9]+", query)
+            if len(term) >= 6
+            and term.lower() not in {
+                "inventory",
+                "document",
+                "policy",
+                "question",
+                "process",
+                "procedures",
+            }
+        },
+        key=len,
+        reverse=True,
+    )
+
+    start = 0
+    lowered = excerpt.lower()
+    for term in query_terms:
+        position = lowered.find(term)
+        if position >= 0:
+            start = max(0, position - 60)
+            break
+
+    snippet = excerpt[start : start + limit]
+    if start > 0:
+        snippet = "..." + snippet.lstrip()
+    if start + limit < len(excerpt):
+        snippet = snippet.rstrip() + "..."
+    return snippet
 
 
 def collect_evidence(state: Dict[str, Any]) -> List[Dict[str, Any]]:
     """Collect structured evidence produced by the agent tools."""
 
     evidence: List[Dict[str, Any]] = []
+    query = state.get("user_query", "")
 
     # ---------------------------------------------------------
     # SQL evidence
@@ -71,8 +113,6 @@ def collect_evidence(state: Dict[str, Any]) -> List[Dict[str, Any]]:
 
                 source = result.get("source")
                 page = result.get("page")
-                chunk_id = result.get("chunk_id")
-                chunk_index = result.get("chunk_index")
                 text = result.get("text")
 
                 # Do not create fake "Unknown document" evidence.
@@ -83,9 +123,7 @@ def collect_evidence(state: Dict[str, Any]) -> List[Dict[str, Any]]:
                     "source": "rag",
                     "document": source,
                     "page": page,
-                    "chunk_id": chunk_id,
-                    "chunk_index": chunk_index,
-                    "text": text,
+                    "excerpt": _build_excerpt(text, query),
                 }
 
                 rag_evidence = {
@@ -116,20 +154,10 @@ def collect_evidence(state: Dict[str, Any]) -> List[Dict[str, Any]]:
             or metadata.get("page")
         )
 
-        chunk_id = (
-            doc.get("chunk_id")
-            or metadata.get("chunk_id")
-        )
-
         text = (
             doc.get("text")
             or metadata.get("text")
             or ""
-        )
-
-        chunk_index = (
-            doc.get("chunk_index")
-            or metadata.get("chunk_index")
         )
 
         # Do not create evidence for an empty/invalid document.
@@ -140,9 +168,7 @@ def collect_evidence(state: Dict[str, Any]) -> List[Dict[str, Any]]:
             "source": "rag",
             "document": source,
             "page": page,
-            "chunk_id": chunk_id,
-            "chunk_index": chunk_index,
-            "text": text,
+            "excerpt": _build_excerpt(text, query),
         }
 
         rag_evidence = {

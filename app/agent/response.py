@@ -4,6 +4,23 @@ from typing import Dict, Any, Optional
 from app.llm.factory import get_provider
 
 
+def _clean_text(text: str) -> str:
+    replacements = {
+        "â€“": "-",
+        "â€”": "-",
+        "â€™": "'",
+        "â€œ": '"',
+        "â€\x9d": '"',
+        "â€¦": "...",
+        "â¯": " ",
+        "Ã—": "x",
+        "Â": "",
+    }
+    for source, replacement in replacements.items():
+        text = text.replace(source, replacement)
+    return " ".join(text.split())
+
+
 def _build_sql_summary(sql_results: Dict[str, Any]) -> str:
     """Build a human-readable summary from SQL results."""
     if not sql_results or not sql_results.get("success"):
@@ -46,11 +63,28 @@ def _build_rag_summary(retrieved_documents: list) -> str:
         if isinstance(doc, dict):
             if doc.get("success") is False:
                 return f"RAG retrieval failed: {doc.get('error', 'unknown error')}"
-            text = doc.get("text", "")
+            text = _clean_text(str(doc.get("text", "")))
             if text:
-                texts.append(text)
+                texts.append(text[:500])
 
-    return " ".join(texts) if texts else "No document content available"
+    return "\n".join(texts) if texts else "No document content available"
+
+
+def _build_analysis_summary(data_analysis: Optional[Dict]) -> str:
+    """Build a compact summary from data-analysis results."""
+    if not data_analysis or not data_analysis.get("success"):
+        return "Data analysis did not succeed"
+
+    rows = data_analysis.get("data", [])
+    if not rows:
+        return "No analysis data returned"
+
+    summary = "; ".join(
+        ", ".join(f"{key}: {value}" for key, value in row.items())
+        for row in rows
+        if isinstance(row, dict)
+    )
+    return summary[:2500]
 
 
 def _build_grounding_prompt(
@@ -58,6 +92,7 @@ def _build_grounding_prompt(
     selected_tools: list,
     sql_results: Optional[Dict],
     calculations: Optional[Dict],
+    data_analysis: Optional[Dict],
     retrieved_documents: Optional[list],
     evidence: Optional[list],
 ) -> str:
@@ -77,6 +112,10 @@ def _build_grounding_prompt(
         if calc_summary:
             parts.append(f"  Calculations: {calc_summary}")
 
+    if data_analysis:
+        analysis_summary = _build_analysis_summary(data_analysis)
+        parts.append(f"  Data Analysis: {analysis_summary}")
+
     if retrieved_documents:
         rag_summary = _build_rag_summary(retrieved_documents)
         parts.append(f"  Retrieved Documents: {rag_summary}")
@@ -89,7 +128,8 @@ def _build_grounding_prompt(
     parts.append("- Use ONLY the tool results above to answer the question.")
     parts.append("- Do NOT invent numbers, facts, or policy statements.")
     parts.append("- If the tool results are insufficient to answer, explicitly say so.")
-    parts.append("- Give a concise, factual, business-oriented answer.")
+    parts.append("- Give a concise, factual answer in no more than 120 words.")
+    parts.append("- Use short paragraphs or bullets when listing multiple points.")
     parts.append("- Do NOT mention internal implementation details.")
     parts.append("")
     parts.append("Answer:")
@@ -110,6 +150,7 @@ def generate_response(state: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     selected_tools = state.get("selected_tools", [])
     sql_results = state.get("sql_results")
     calculations = state.get("calculations")
+    data_analysis = (state.get("tool_results") or {}).get("data_analysis")
     retrieved_documents = state.get("retrieved_documents", [])
     evidence = state.get("evidence", [])
     verification_result = state.get("verification_result", {})
@@ -132,6 +173,7 @@ def generate_response(state: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         selected_tools=selected_tools,
         sql_results=sql_results,
         calculations=calculations,
+        data_analysis=data_analysis,
         retrieved_documents=retrieved_documents,
         evidence=evidence,
     )
@@ -178,6 +220,8 @@ def generate_response(state: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         elif calculations:
             calc_summary = _build_calculator_summary(calculations)
             final_answer = f"Based on calculations: {calc_summary}" if calc_summary else "Calculations were performed but no result was produced."
+        elif data_analysis and data_analysis.get("success"):
+            final_answer = f"Based on data analysis: {_build_analysis_summary(data_analysis)}"
         else:
             final_answer = "The query was processed but no specific data was available to provide a factual answer."
 

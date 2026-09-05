@@ -237,20 +237,20 @@ def execute_tools(
                 {},
             )
 
-            result = data_analysis_tool.groupby_aggregate(
-                params.get(
-                    "source",
-                    "sales",
-                ),
-                params.get(
-                    "group_by",
-                    [],
-                ),
-                params.get(
-                    "aggregations",
-                    {},
-                ),
-            )
+            source = params.get("source", "sales")
+            if params.get("operation") == "trend":
+                result = data_analysis_tool.trend_by_period(
+                    source,
+                    params.get("date_column", "date"),
+                    params.get("metric", "revenue"),
+                    params.get("freq", "ME"),
+                )
+            else:
+                result = data_analysis_tool.groupby_aggregate(
+                    source,
+                    params.get("group_by", []),
+                    params.get("aggregations", {}),
+                )
 
             results["data_analysis"] = result
 

@@ -3,12 +3,13 @@ from __future__ import annotations
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from app.config import settings
 
-DEFAULT_DATABASE_URL = "sqlite:////app/data/operations.db"
+DEFAULT_DATABASE_URL = settings.database_url
 
 
 def get_engine(database_url: str | None = None):
-    url = database_url or os.environ.get("DATABASE_URL") or DEFAULT_DATABASE_URL
+    url = database_url or os.environ.get("DATABASE_URL") or settings.database_url or DEFAULT_DATABASE_URL
     return create_engine(url, future=True)
 
 

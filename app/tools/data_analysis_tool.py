@@ -43,6 +43,11 @@ def groupby_aggregate(source: str, group_by: List[str], aggregations: Dict[str, 
         for c in aggregations.keys():
             if c not in df.columns:
                 return {"success": False, "error": f"Aggregate column {c} not in data"}
+        if not group_by or not aggregations:
+            return {
+                "success": False,
+                "error": "At least one grouping column and aggregation are required",
+            }
         res = df.groupby(group_by).agg(aggregations).reset_index()
         # convert to records
         return {"success": True, "data": res.to_dict(orient="records")}

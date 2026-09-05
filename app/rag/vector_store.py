@@ -4,10 +4,15 @@ from pathlib import Path
 import faiss
 import numpy as np
 import json
+from app.config import settings
 
 
-INDEX_PATH = Path("vector_store/index.faiss")
-METADATA_PATH = Path("vector_store/metadata.json")
+def _store_paths() -> tuple[Path, Path]:
+    store_path = Path(settings.vector_store_path)
+    return store_path / "index.faiss", store_path / "metadata.json"
+
+
+INDEX_PATH, METADATA_PATH = _store_paths()
 
 
 def ensure_dirs():
