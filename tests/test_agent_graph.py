@@ -40,6 +40,25 @@ def test_trend_analysis_routing(monkeypatch):
     assert "Data Analysis:" in st["final_answer"]
 
 
+def test_trend_analysis_routing_with_production_planner(monkeypatch):
+    monkeypatch.setattr(settings, "llm_provider", "groq")
+    import app.llm.factory as factory
+    factory._provider_instance = None
+
+    class FakeProvider:
+        def generate(self, prompt):
+            return {"text": "sql, data_analysis"}
+
+    monkeypatch.setattr(factory, "get_provider", lambda: FakeProvider())
+    import app.agent.planner as planner
+    monkeypatch.setattr(planner, "get_provider", lambda: FakeProvider())
+
+    st = run_graph("Show the trend analysis for sales revenue")
+
+    assert st["selected_tools"] == ["data_analysis"]
+    assert st["verification_result"]["ok"] is True
+
+
 def test_inventory_policy_comparison_routing(monkeypatch):
     setup_mock_provider(monkeypatch)
 

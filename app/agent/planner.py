@@ -449,6 +449,11 @@ def determine_plan(user_query: str) -> List[str]:
     elif "data_analysis" not in tools:
         tools.append("data_analysis")
 
+    # Trend and analysis requests are handled by data_analysis. Do not keep
+    # an LLM-proposed SQL tool unless the query also asks for a calculation.
+    if has_analysis_intent and not has_calculation_words:
+        tools = [tool for tool in tools if tool == "data_analysis"]
+
     # ---------------------------------------------------------
     # Ensure SQL for calculations requiring business data
     # ---------------------------------------------------------
